@@ -1,0 +1,113 @@
+@import 'https://fonts.googleapis.com/css?family=Prompt';
+body {
+    margin: 0;
+    color: #cccccc;
+    font-family: 'Prompt', sans-serif;
+    height: 100%;
+    width: 100%;
+    background-color: #564756;
+    overflow: hidden;
+    text-align: center;
+}
+.search-container {
+    margin: 0 auto;
+    margin-top: 10%;
+    width: 50%;
+    background-color: white;
+    text-align: center;
+    background-color: #564756;
+}
+.selected {
+    text-align: center;
+}
+.selected ul {
+    padding: 0;
+    color: black;
+    display: inline-block;
+    list-style: none;
+    position: relative;
+
+}
+.selected ul li {
+    font-size: .8em;
+    background-color: white;
+    text-align: center;
+    line-height: 1.2rem;
+    display: inline-block;
+    padding: 0px 15px;
+    text-indent: inherit;
+    margin: 2px;
+    line-height: 2.5;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+}
+.selected ul li:hover {
+    box-shadow: inset 0px 0px 5px #564756;
+//background-color: #ccc;
+}
+.selected ul li:after {
+    content: "x";
+    color: white;
+    margin-right: -15px;
+    float: right;
+    padding: 0px 10px;
+    margin-left: 7px;
+    background-color: red;
+    border-radius: 1px 15px 15px 1px;
+}
+
+.search-container input{
+    width: 297px;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    border: 0 none;
+    z-index: 10;
+    color: white;
+    outline: none;
+    background: #8a908e;
+    box-sizing: border-box;
+    transition: all 0.15s;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: white;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: white;
+}
+#search_text:focus {
+    background: rgb(64, 151, 119);
+}
+.search-container input:hover {
+    background: #7b827f;
+}
+
+.search-results {
+    width: 297px;
+    margin: 0 auto;
+    z-index: 9;
+    color: black;
+    margin-top: -16px;
+}
+.search-results ul {
+    list-style: none;
+    padding-left: 0px;
+}
+.search-results ul li {
+    background-color: #ccc;
+    cursor: pointer;
+    padding: 10px;
+    transition: all;
+    transition-duration: 100ms;
+}
+.search-results ul li:hover {
+    background-color: #bfbfbf;
+}
