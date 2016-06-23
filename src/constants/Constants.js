@@ -2,7 +2,8 @@ var Constants = {
     SEARCH: 'query',
 
     api: {
-        GET_PROBLEMS: 'http://localhost:3007/v1/problems',
+        APP_HOME: 'http://localhost:3007',
+        GET_PROBLEMS: '/v1/problems',
         PUBLIC_CREDENTIALS: {
             uid: 1,
             authtoken: 'e8008f83-9f70-4df0-b7ea-676b22d9d335-malikanshul29@gmail.com-1466419597165'

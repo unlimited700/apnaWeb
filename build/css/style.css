@@ -12,7 +12,7 @@ body {
 .search-container {
     margin: 0 auto;
     margin-top: 10%;
-    width: 50%;
+    width: 297px;
     background-color: white;
     text-align: center;
     background-color: #564756;
@@ -93,6 +93,7 @@ body {
 .search-results {
     width: 297px;
     margin: 0 auto;
+    position: absolute;
     z-index: 9;
     color: black;
     margin-top: -16px;

@@ -1,21 +1,27 @@
-var SearchDispatcher = require('../../dispatchers/search/SearchDispatcher');
-var C = require('../../constants/Constants');
+var alt = require('../../alt');
 
-var SearchActions = {
-
-    create: function(text) {
-        SearchDispatcher.handleSearchAction({
-            actionType: C.ActionConstants.PROBLEM_ADD,
-            text: text
-        })
-    },
-
-    destroy: function (text) {
-        SearchDispatcher.handleSearchAction({
-            actionType: C.ActionConstants.PROBLEM_DESTROY,
-            text: text
-        });
+class SearchActions {
+    search(text) {
+        return text;
     }
-};
 
-module.exports = SearchActions;
+    delete(index) {
+//        console.log("delete event called: ", index);
+        return index;
+    }
+
+    add(index) {
+//        console.log("request to add", index);
+        return index;
+    }
+
+    problemsFetchFailed(errorMessage) {
+        return errorMessage;
+    }
+
+    problemsLoading(problem) {
+        return problem;
+    }
+}
+
+module.exports = alt.createActions(SearchActions);
