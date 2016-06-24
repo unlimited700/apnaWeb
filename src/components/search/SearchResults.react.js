@@ -8,7 +8,7 @@ var SearchResults = React.createClass({
                 <ul>
 
                     {this.props.all.map((text, i) => {
-                        var onAdd=this.onAdd.bind(this, i);
+                        var onAdd=this.onAdd.bind(this, text);
                         return (
                             <li key={i} onClick={onAdd}>{text}</li>
                         );

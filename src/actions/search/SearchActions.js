@@ -10,9 +10,9 @@ class SearchActions {
         return index;
     }
 
-    add(index) {
+    add(text) {
 //        console.log("request to add", index);
-        return index;
+        return text;
     }
 
     problemsFetchFailed(errorMessage) {

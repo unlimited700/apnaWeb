@@ -1,8 +1,7 @@
 var Constants = {
     SEARCH: 'query',
-
     api: {
-        APP_HOME: 'http://localhost:3007',
+        APP_HOME: 'http://localhost:3000/api',
         GET_PROBLEMS: '/v1/problems',
         PUBLIC_CREDENTIALS: {
             uid: 1,
@@ -15,7 +14,6 @@ var Constants = {
         PROBLEM_ADD: 'problem_add',
         PROBLEM_DESTROY: 'problem_destroy'
     }
-    
 }
 
 module.exports = Constants;

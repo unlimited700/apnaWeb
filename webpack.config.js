@@ -4,10 +4,13 @@ var BUILD_DIR = path.resolve(__dirname, 'build/');
 var APP_DIR = path.resolve(__dirname, 'src/');
 
 var config = {
-  entry: ['whatwg-fetch', APP_DIR + '/index.js'],
+  entry: ['whatwg-fetch',
+      'webpack-hot-middleware/client',
+      path.join(__dirname, '/src/index.js')],
   output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js'
+        path: path.join(__dirname, '/build/'),
+        filename: '/bundle.js',
+        publicPath: '/'
   },
   module : {
     loaders : [
@@ -16,16 +19,19 @@ var config = {
         include : APP_DIR,
         loader :'babel',
         query: {
-          presets: ['es2015', 'react']
+            presets: ['es2015', 'react'],
+            cacheDirectory: '/tmp/'
         }
-      }
+      },
+        {
+            test: /\.css?$/,
+            loader: 'style.css'
+        }
     ]
   },
-  node: {
-      fs: "empty",
-      net: "empty",
-      tls: "empty"
-  }
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 };
 
 module.exports = config;
