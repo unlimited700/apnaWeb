@@ -99,6 +99,8 @@ body {
     margin-top: -16px;
 }
 .search-results ul {
+    max-height:176px;
+    overflow-y: scroll;
     list-style: none;
     padding-left: 0px;
 }
