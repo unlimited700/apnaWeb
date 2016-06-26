@@ -1,6 +1,6 @@
-var React = require('react');
-var SearchContainer = require('./SearchContainer.react');
-var SelectedProblems = require('./SelectedProblems.react');
+import React from 'react';
+import SearchContainer from './SearchContainer.react';
+import SelectedProblems from './SelectedProblems.react';
 
 var MainSection = React.createClass({
     render: function() {

@@ -1,5 +1,5 @@
-var alt = require('../../alt');
-var C = require('../../constants/Constants');
+import alt from '../../alt';
+import C from '../../constants/Constants';
 
 import 'whatwg-fetch';
 
@@ -27,7 +27,7 @@ class SearchStore {
             return response.json()
         }
 
-        fetch(C.api.APP_HOME + C.api.GET_PROBLEMS, {
+        fetch(C.api.API_HOME + C.api.GET_PROBLEMS, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,6 @@ class SearchStore {
             .then(status)
             .then(json)
             .then(function(data) {
-                console.log(data);
                 object.allProblems = data.problems;
             });
 
@@ -69,7 +68,6 @@ class SearchStore {
             this.selectedProblems.push(added);
         }
         this.searchTerm = "";
-        console.log(this.selectedProblems);
         this.searchResults = [];
         return true;
     }
@@ -79,7 +77,6 @@ class SearchStore {
         if(deleted) {
             this.allProblems.push(deleted);
         }
-        console.log(this.allProblems);
         return true;
     }
 

@@ -1,6 +1,7 @@
-var React = require('react');
-var SearchResults = require('./SearchResults.react');
-var SearchActions = require('../../actions/search/SearchActions');
+import React from 'react';
+import SearchResults from './SearchResults.react';
+import SearchActions from '../../actions/search/SearchActions';
+
 var SearchContainer = React.createClass({
     
     render: function() {

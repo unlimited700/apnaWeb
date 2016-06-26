@@ -1,8 +1,7 @@
-var React = require('react');
-
-var MainSection = require('./MainSection.react');
-var SearchStore = require('../../stores/search/SearchStore');
-var AltContainer = require('alt-container');
+import React from 'react';
+import MainSection from './MainSection.react';
+import SearchStore from '../../stores/search/SearchStore';
+import AltContainer from 'alt-container';
 
 var SearchApp = React.createClass({
     getInitialState: function() {
