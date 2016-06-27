@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ed3e4e04f04c201fb942"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e89e53df6d92a8aabbda"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28103,7 +28103,7 @@
 	                _react2.default.createElement(
 	                    _altContainer2.default,
 	                    { store: _UserStore2.default },
-	                    _react2.default.createElement(_Header2.default, { history: this.props.history })
+	                    _react2.default.createElement(_Header2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                    _altContainer2.default,
@@ -28435,7 +28435,12 @@
 	                            'Login'
 	                        )
 	                    ),
-	                    _react2.default.createElement(
+	                    this.props.isLoggedIn ? _react2.default.createElement(
+	                        'li',
+	                        { className: 'welcome-li' },
+	                        'Welcome ',
+	                        this.props.user.name
+	                    ) : _react2.default.createElement(
 	                        'li',
 	                        null,
 	                        _react2.default.createElement(
@@ -28472,15 +28477,9 @@
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
-	var _Constants = __webpack_require__(265);
+	var _APIService = __webpack_require__(289);
 
-	var _Constants2 = _interopRequireDefault(_Constants);
-
-	var _FilterResponse = __webpack_require__(266);
-
-	var _FilterResponse2 = _interopRequireDefault(_FilterResponse);
-
-	__webpack_require__(1);
+	var _APIService2 = _interopRequireDefault(_APIService);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28491,6 +28490,8 @@
 	        _classCallCheck(this, UserStore);
 
 	        this.loginError = "";
+	        this.signupError = "";
+
 	        this.isLoggedIn = false;
 	        if (localStorage.email) {
 	            this.isLoggedIn = true;
@@ -28505,54 +28506,89 @@
 	        }
 	        this.bindListeners({
 	            handleLogin: _UserActions2.default.LOGIN,
-	            handleLogout: _UserActions2.default.LOGOUT
+	            handleLogout: _UserActions2.default.LOGOUT,
+	            handleSignup: _UserActions2.default.SIGNUP
 	        });
 	    }
 
 	    _createClass(UserStore, [{
 	        key: 'handleLogin',
 	        value: function handleLogin(data) {
-	            if (!(data.user || data.pass)) {
-	                this.setState({ loginError: "Please enter username and password" });
+	            if (!(data.user || !data.pass)) {
+	                this.setState({ loginError: "Please enter both email and password" });
 	                return;
 	            }
 	            var obj = this;
-	            fetch(_Constants2.default.api.API_HOME + _Constants2.default.api.LOGIN, {
-	                method: 'POST',
-	                headers: {
-	                    'Content-Type': 'application/json',
-	                    'authtoken': 'apnavadiya!@#'
-	                },
-	                body: JSON.stringify({
-	                    userName: data.user,
-	                    password: data.pass
-	                })
-	            }).then(_FilterResponse2.default).then(function (data) {
-	                if (data.responseCode != 200) {
-	                    obj.setState({ loginError: "Invalid username or password" });
+	            _APIService2.default.login(data, function (data) {
+	                if (!data) {
+	                    obj.setState({
+	                        loginError: "Something went wrong, please try again"
+	                    });
+	                } else if (data.responseCode != 200) {
+	                    obj.setState({
+	                        loginError: "Invalid email or password"
+	                    });
 	                } else {
-	                    localStorage.username = data.name;
+	                    localStorage.name = data.name;
 	                    localStorage.token = data.token;
 	                    localStorage.uid = data.userId;
 	                    localStorage.email = data.userName;
-	                    obj.user = {
-	                        name: data.name,
-	                        email: data.userName,
-	                        token: data.token,
-	                        uid: data.userId
-	                    };
+
+	                    obj.setState({
+	                        loginError: "Successfully Loggged in",
+	                        isLoggedIn: true,
+	                        user: {
+	                            name: data.name,
+	                            email: data.userName,
+	                            token: data.token,
+	                            uid: data.userId
+	                        }
+	                    });
 	                }
 	            });
 	        }
 	    }, {
 	        key: 'handleLogout',
 	        value: function handleLogout() {
-	            localStorage.username = "";
-	            localStorage.token = "";
-	            localStorage.uid = "";
-	            localStorage.email = "";
-	            this.isLoggedIn = false;
-	            this.user = {};
+	            localStorage.removeItem("name");
+	            localStorage.removeItem("token");
+	            localStorage.removeItem("uid");
+	            localStorage.removeItem("email");
+	            this.setState({
+	                isLoggedIn: false,
+	                loginError: "",
+	                user: {}
+	            });
+	        }
+	    }, {
+	        key: 'handleSignup',
+	        value: function handleSignup(data) {
+	            var _this = this;
+
+	            var error = "";
+	            if (!data.name) {
+	                error = "Please enter a valid name";
+	            } else if (!data.email) {
+	                error = "Please enter a valid email address";
+	            } else if (!data.password) {
+	                error = "Please enter a password";
+	            } else if (!data.age) {
+	                error = "Please specify your age";
+	            } else if (!data.male && !data.female) {
+	                error = "Please choose a gender";
+	            }
+	            if (error) {
+	                this.setState({ signupError: error });
+	            } else {
+	                data.sex = data.male ? "Male" : "Female";
+	                _APIService2.default.signup(data, function (response) {
+	                    if (response.responseCode == 200) {
+	                        _this.setState({ signupError: "Successfully signed up, you can now login." });
+	                    } else {
+	                        _this.setState({ signupError: response.message });
+	                    }
+	                });
+	            }
 	        }
 	    }]);
 
@@ -30296,7 +30332,9 @@
 	        }
 	    }, {
 	        key: 'signup',
-	        value: function signup() {}
+	        value: function signup(data) {
+	            return data;
+	        }
 	    }, {
 	        key: 'isAuthenticated',
 	        value: function isAuthenticated() {}
@@ -30319,21 +30357,9 @@
 	'use strict';
 
 	var Constants = {
-	    SEARCH: 'query',
-	    api: {
-	        API_HOME: '/api/v1',
-	        GET_PROBLEMS: '/problems',
-	        LOGIN: '/login',
-	        PUBLIC_CREDENTIALS: {
-	            uid: 1,
-	            authtoken: '5713b9d6-dbc6-415e-b8d1-db3be2961793-jpradeep.93@gmail.com-1460293796095'
-	        }
-	    },
-
-	    ActionConstants: {
-	        RECIEVED_PROBLEMS: 'recieved_problems',
-	        PROBLEM_ADD: 'problem_add',
-	        PROBLEM_DESTROY: 'problem_destroy'
+	    publicCredentials: {
+	        uid: 1,
+	        authtoken: '5713b9d6-dbc6-415e-b8d1-db3be2961793-jpradeep.93@gmail.com-1460293796095'
 	    }
 	};
 
@@ -31441,11 +31467,9 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _Constants = __webpack_require__(265);
+	var _APIService = __webpack_require__(289);
 
-	var _Constants2 = _interopRequireDefault(_Constants);
-
-	__webpack_require__(1);
+	var _APIService2 = _interopRequireDefault(_APIService);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31475,17 +31499,7 @@
 	            return response.json();
 	        }
 
-	        fetch(_Constants2.default.api.API_HOME + _Constants2.default.api.GET_PROBLEMS, {
-	            method: 'GET',
-	            headers: {
-	                'Accept': 'application/json',
-	                'Content-Type': 'application/json',
-	                'uid': _Constants2.default.api.PUBLIC_CREDENTIALS.uid,
-	                'authtoken': _Constants2.default.api.PUBLIC_CREDENTIALS.authtoken,
-	                'Origin': 'http://localhost:8080',
-	                'Access-Control-Allow-Origin': 'http://localhost:8080'
-	            }
-	        }).then(status).then(json).then(function (data) {
+	        _APIService2.default.getProblems(function (data) {
 	            object.allProblems = data.problems;
 	        });
 
@@ -31567,6 +31581,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(51);
+
 	var _UserActions = __webpack_require__(264);
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
@@ -31575,9 +31591,9 @@
 
 	var LoginPage = _react2.default.createClass({
 	    displayName: 'LoginPage',
-	    componentWillMount: function componentWillMount() {
-	        if (this.props.isLoggedIn) {
-	            this.props.history.push('/');
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        if (nextProps.isLoggedIn) {
+	            this.props.router.push('/');
 	        }
 	    },
 	    render: function render() {
@@ -31601,7 +31617,7 @@
 	                    null,
 	                    this.props.loginError
 	                ),
-	                _react2.default.createElement('input', { type: 'text', placeholder: 'Username' }),
+	                _react2.default.createElement('input', { type: 'email', placeholder: 'Email' }),
 	                _react2.default.createElement('br', null),
 	                _react2.default.createElement('input', { type: 'password', placeholder: 'Password' }),
 	                _react2.default.createElement('br', null),
@@ -31619,10 +31635,12 @@
 	        var user = event.target.children[1].value;
 	        var pass = event.target.children[3].value;
 	        _UserActions2.default.login(user, pass);
+	        event.target.children[1].value = "";
+	        event.target.children[3].value = "";
 	    }
 	});
 
-	module.exports = LoginPage;
+	module.exports = (0, _reactRouter.withRouter)(LoginPage);
 
 /***/ },
 /* 287 */
@@ -31633,6 +31651,10 @@
 	var _react = __webpack_require__(14);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _UserActions = __webpack_require__(264);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31651,8 +31673,52 @@
 	                    'Signup'
 	                )
 	            ),
-	            _react2.default.createElement('form', null)
+	            _react2.default.createElement(
+	                'form',
+	                { className: 'form form-container signup-form', onSubmit: this._signup },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.signupError
+	                ),
+	                _react2.default.createElement('input', { type: 'text', placeholder: 'Name' }),
+	                _react2.default.createElement('input', { type: 'text', placeholder: 'example@example.com' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { type: 'number', placeholder: 'Phone' }),
+	                _react2.default.createElement('input', { type: 'password', placeholder: 'Password' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { type: 'number', placeholder: 'Age' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'inline' },
+	                    _react2.default.createElement('input', { type: 'radio', name: 'gender', value: 'Male' }),
+	                    ' Male',
+	                    _react2.default.createElement('input', { type: 'radio', name: 'gender', value: 'Female' }),
+	                    ' Female'
+	                ),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'button',
+	                    null,
+	                    'Signup'
+	                )
+	            )
 	        );
+	    },
+	    _signup: function _signup(event) {
+	        event.preventDefault();
+	        var input = event.target.children;
+	        var data = {
+	            name: input[1].value,
+	            email: input[2].value,
+	            phone: input[4].value,
+	            password: input[5].value,
+	            age: input[7].value,
+	            male: input[8].children[0].checked,
+	            female: input[8].children[1].checked
+	        };
+	        _UserActions2.default.signup(data);
 	    }
 	});
 
@@ -31668,6 +31734,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(51);
+
 	var _UserActions = __webpack_require__(264);
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
@@ -31678,7 +31746,7 @@
 	    displayName: 'LogoutPage',
 	    componentWillMount: function componentWillMount() {
 	        _UserActions2.default.logout();
-	        this.props.history.push('/login');
+	        this.props.router.push('/login');
 	    },
 	    render: function render() {
 	        return _react2.default.createElement(
@@ -31697,7 +31765,82 @@
 	    }
 	});
 
-	module.exports = LogoutPage;
+	module.exports = (0, _reactRouter.withRouter)(LogoutPage);
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _FilterResponse = __webpack_require__(266);
+
+	var _FilterResponse2 = _interopRequireDefault(_FilterResponse);
+
+	var _Constants = __webpack_require__(265);
+
+	var _Constants2 = _interopRequireDefault(_Constants);
+
+	__webpack_require__(1);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var apiHome = '/api/v1';
+
+	var endpoints = {
+	    getProblems: apiHome + '/problems',
+	    login: apiHome + '/login',
+	    signup: apiHome + '/signup',
+	    setSolution: apiHome + '/solution',
+	    mapSymptom: apiHome + '/problem-symptom-mapping',
+	    uploadProblemSolution: apiHome + '/upload-problem-solution',
+	    setProblem: apiHome + '/problem',
+	    recommend: apiHome + '/recommend'
+	};
+
+	var defaultHeaders = {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	    'authtoken': 'apnavadiya!@#'
+	};
+
+	var APIService = {
+
+	    getProblems: function getProblems(cb) {
+	        fetch(endpoints.getProblems, {
+	            method: 'GET',
+	            headers: {
+	                'Accept': 'application/json',
+	                'Content-Type': 'application/json',
+	                'uid': _Constants2.default.publicCredentials.uid,
+	                'authtoken': _Constants2.default.publicCredentials.authtoken
+	            }
+	        }).then(_FilterResponse2.default).then(cb);
+	    },
+
+	    login: function login(data, cb) {
+
+	        fetch(endpoints.login, {
+	            method: 'POST',
+	            headers: defaultHeaders,
+	            body: JSON.stringify({
+	                userName: data.user,
+	                password: data.pass
+	            })
+	        }).then(_FilterResponse2.default).then(cb);
+	    },
+
+	    signup: function signup(data, cb) {
+
+	        fetch(endpoints.signup, {
+	            method: 'POST',
+	            headers: defaultHeaders,
+	            body: JSON.stringify(data)
+	        }).then(_FilterResponse2.default).then(cb);
+	    }
+	};
+
+	module.exports = APIService;
 
 /***/ }
 /******/ ]);

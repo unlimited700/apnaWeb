@@ -1,7 +1,5 @@
 import alt from '../../alt';
-import C from '../../constants/Constants';
-
-import 'whatwg-fetch';
+import APIService from '../../services/APIService';
 
 var SearchActions = require('../../actions/search/SearchActions');
 
@@ -27,20 +25,7 @@ class SearchStore {
             return response.json()
         }
 
-        fetch(C.api.API_HOME + C.api.GET_PROBLEMS, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'uid': C.api.PUBLIC_CREDENTIALS.uid,
-                'authtoken': C.api.PUBLIC_CREDENTIALS.authtoken,
-                'Origin': 'http://localhost:8080',
-                'Access-Control-Allow-Origin': 'http://localhost:8080'
-            }
-            })
-            .then(status)
-            .then(json)
-            .then(function(data) {
+        APIService.getProblems(function(data) {
                 object.allProblems = data.problems;
             });
 

@@ -12,7 +12,7 @@ var MasterPage = React.createClass({
             <DocumentTitle title="ApnaVaidya">
                 <div>
                     <AltContainer store={UserStore}>
-                        <Header history={this.props.history}/>
+                        <Header />
                     </AltContainer>
                     <AltContainer store={UserStore}>
 

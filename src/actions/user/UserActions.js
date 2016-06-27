@@ -5,8 +5,8 @@ class UserActions {
         return {user: user, pass: pass};
     }
     
-    signup() {
-        
+    signup(data) {
+        return data;
     }
     
     isAuthenticated() {

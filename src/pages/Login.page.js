@@ -1,10 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import UserActions from '../actions/user/UserActions';
 var LoginPage = React.createClass({
 
-    componentWillMount() {
-        if(this.props.isLoggedIn) {
-            this.props.history.push('/');
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isLoggedIn) {
+            this.props.router.push('/');
         }
     },
     render() {
@@ -13,7 +14,7 @@ var LoginPage = React.createClass({
                 <center><h3>Login</h3></center>
                 <form className="form-container login-form" onSubmit={ this._login }>
                     <p>{this.props.loginError}</p>
-                    <input type="text" placeholder="Username"/><br />
+                    <input type="email" placeholder="Email"/><br />
                     <input type="password" placeholder="Password"/><br /><br />
 
                     <button>Login</button>
@@ -28,8 +29,9 @@ var LoginPage = React.createClass({
         var user =  event.target.children[1].value;
         var pass = event.target.children[3].value;
         UserActions.login(user, pass);
-
+        event.target.children[1].value = "";
+        event.target.children[3].value = "";
     }
 });
 
-module.exports = LoginPage;
+module.exports = withRouter(LoginPage);

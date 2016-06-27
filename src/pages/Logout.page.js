@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router';
+
 import UserActions from '../actions/user/UserActions';
 var LogoutPage = React.createClass({
     componentWillMount() {
         UserActions.logout();
-        this.props.history.push('/login');
+        this.props.router.push('/login');
     },
     render() {
         return (
@@ -14,4 +16,4 @@ var LogoutPage = React.createClass({
     }
 });
 
-module.exports = LogoutPage;
+module.exports = withRouter(LogoutPage);
