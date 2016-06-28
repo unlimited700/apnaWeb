@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e89e53df6d92a8aabbda"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13eb5c083a9872d1bee3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2159,23 +2159,23 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _MasterPage = __webpack_require__(243);
+	var _MasterPageReact = __webpack_require__(243);
 
-	var _MasterPage2 = _interopRequireDefault(_MasterPage);
+	var _MasterPageReact2 = _interopRequireDefault(_MasterPageReact);
 
-	var _SearchApp = __webpack_require__(279);
+	var _SearchApp = __webpack_require__(280);
 
 	var _SearchApp2 = _interopRequireDefault(_SearchApp);
 
-	var _Login = __webpack_require__(286);
+	var _Login = __webpack_require__(287);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Signup = __webpack_require__(287);
+	var _Signup = __webpack_require__(288);
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Logout = __webpack_require__(288);
+	var _Logout = __webpack_require__(289);
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
@@ -2186,7 +2186,7 @@
 	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(
 	        _reactRouter.Route,
-	        { path: '/', component: _MasterPage2.default },
+	        { path: '/', component: _MasterPageReact2.default },
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _SearchApp2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _Logout2.default }),
@@ -28077,15 +28077,15 @@
 
 	var _reactDocumentTitle2 = _interopRequireDefault(_reactDocumentTitle);
 
-	var _Header = __webpack_require__(248);
+	var _HeaderReact = __webpack_require__(248);
 
-	var _Header2 = _interopRequireDefault(_Header);
+	var _HeaderReact2 = _interopRequireDefault(_HeaderReact);
 
 	var _UserStore = __webpack_require__(249);
 
 	var _UserStore2 = _interopRequireDefault(_UserStore);
 
-	var _altContainer = __webpack_require__(267);
+	var _altContainer = __webpack_require__(268);
 
 	var _altContainer2 = _interopRequireDefault(_altContainer);
 
@@ -28103,7 +28103,7 @@
 	                _react2.default.createElement(
 	                    _altContainer2.default,
 	                    { store: _UserStore2.default },
-	                    _react2.default.createElement(_Header2.default, null)
+	                    _react2.default.createElement(_HeaderReact2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                    _altContainer2.default,
@@ -28477,7 +28477,7 @@
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
-	var _APIService = __webpack_require__(289);
+	var _APIService = __webpack_require__(265);
 
 	var _APIService2 = _interopRequireDefault(_APIService);
 
@@ -30352,18 +30352,78 @@
 
 /***/ },
 /* 265 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Constants = {
-	    publicCredentials: {
-	        uid: 1,
-	        authtoken: '5713b9d6-dbc6-415e-b8d1-db3be2961793-jpradeep.93@gmail.com-1460293796095'
+	var _FilterResponse = __webpack_require__(266);
+
+	var _FilterResponse2 = _interopRequireDefault(_FilterResponse);
+
+	var _Constants = __webpack_require__(267);
+
+	var _Constants2 = _interopRequireDefault(_Constants);
+
+	__webpack_require__(1);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var apiHome = '/api/v1';
+
+	var endpoints = {
+	    getProblems: apiHome + '/problems',
+	    login: apiHome + '/login',
+	    signup: apiHome + '/signup',
+	    setSolution: apiHome + '/solution',
+	    mapSymptom: apiHome + '/problem-symptom-mapping',
+	    uploadProblemSolution: apiHome + '/upload-problem-solution',
+	    setProblem: apiHome + '/problem',
+	    recommend: apiHome + '/recommend'
+	};
+
+	var defaultHeaders = {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	    'authtoken': 'apnavadiya!@#'
+	};
+
+	var APIService = {
+
+	    getProblems: function getProblems(cb) {
+	        fetch(endpoints.getProblems, {
+	            method: 'GET',
+	            headers: {
+	                'Accept': 'application/json',
+	                'Content-Type': 'application/json',
+	                'uid': _Constants2.default.publicCredentials.uid,
+	                'authtoken': _Constants2.default.publicCredentials.authtoken
+	            }
+	        }).then(_FilterResponse2.default).then(cb);
+	    },
+
+	    login: function login(data, cb) {
+
+	        fetch(endpoints.login, {
+	            method: 'POST',
+	            headers: defaultHeaders,
+	            body: JSON.stringify({
+	                userName: data.user,
+	                password: data.pass
+	            })
+	        }).then(_FilterResponse2.default).then(cb);
+	    },
+
+	    signup: function signup(data, cb) {
+
+	        fetch(endpoints.signup, {
+	            method: 'POST',
+	            headers: defaultHeaders,
+	            body: JSON.stringify(data)
+	        }).then(_FilterResponse2.default).then(cb);
 	    }
 	};
 
-	module.exports = Constants;
+	module.exports = APIService;
 
 /***/ },
 /* 266 */
@@ -30379,6 +30439,21 @@
 
 /***/ },
 /* 267 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Constants = {
+	    publicCredentials: {
+	        uid: 1,
+	        authtoken: '5713b9d6-dbc6-415e-b8d1-db3be2961793-jpradeep.93@gmail.com-1460293796095'
+	    }
+	};
+
+	module.exports = Constants;
+
+/***/ },
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*eslint-disable*/
@@ -30458,7 +30533,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _objectAssign = __webpack_require__(268);
+	var _objectAssign = __webpack_require__(269);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -30665,16 +30740,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defineProperties = __webpack_require__(269);
+	var defineProperties = __webpack_require__(270);
 
-	var implementation = __webpack_require__(273);
-	var getPolyfill = __webpack_require__(277);
-	var shim = __webpack_require__(278);
+	var implementation = __webpack_require__(274);
+	var getPolyfill = __webpack_require__(278);
+	var shim = __webpack_require__(279);
 
 	defineProperties(implementation, {
 		implementation: implementation,
@@ -30686,13 +30761,13 @@
 
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys = __webpack_require__(270);
-	var foreach = __webpack_require__(272);
+	var keys = __webpack_require__(271);
+	var foreach = __webpack_require__(273);
 	var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
 
 	var toStr = Object.prototype.toString;
@@ -30748,7 +30823,7 @@
 
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30757,7 +30832,7 @@
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
 	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(271);
+	var isArgs = __webpack_require__(272);
 	var hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString');
 	var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
 	var dontEnums = [
@@ -30882,7 +30957,7 @@
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30905,7 +30980,7 @@
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports) {
 
 	
@@ -30933,18 +31008,18 @@
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// modified from https://github.com/es-shims/es6-shim
-	var keys = __webpack_require__(270);
-	var bind = __webpack_require__(274);
+	var keys = __webpack_require__(271);
+	var bind = __webpack_require__(275);
 	var canBeObject = function (obj) {
 		return typeof obj !== 'undefined' && obj !== null;
 	};
-	var hasSymbols = __webpack_require__(276)();
+	var hasSymbols = __webpack_require__(277)();
 	var toObject = Object;
 	var push = bind.call(Function.call, Array.prototype.push);
 	var propIsEnumerable = bind.call(Function.call, Object.prototype.propertyIsEnumerable);
@@ -30978,16 +31053,16 @@
 
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var implementation = __webpack_require__(275);
+	var implementation = __webpack_require__(276);
 
 	module.exports = Function.prototype.bind || implementation;
 
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports) {
 
 	var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
@@ -31041,12 +31116,12 @@
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys = __webpack_require__(270);
+	var keys = __webpack_require__(271);
 
 	module.exports = function hasSymbols() {
 		if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
@@ -31084,12 +31159,12 @@
 
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var implementation = __webpack_require__(273);
+	var implementation = __webpack_require__(274);
 
 	var lacksProperEnumerationOrder = function () {
 		if (!Object.assign) {
@@ -31140,13 +31215,13 @@
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var define = __webpack_require__(269);
-	var getPolyfill = __webpack_require__(277);
+	var define = __webpack_require__(270);
+	var getPolyfill = __webpack_require__(278);
 
 	module.exports = function shimAssign() {
 		var polyfill = getPolyfill();
@@ -31160,7 +31235,7 @@
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31169,15 +31244,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _MainSection = __webpack_require__(280);
+	var _MainSection = __webpack_require__(281);
 
 	var _MainSection2 = _interopRequireDefault(_MainSection);
 
-	var _SearchStore = __webpack_require__(285);
+	var _SearchStore = __webpack_require__(286);
 
 	var _SearchStore2 = _interopRequireDefault(_SearchStore);
 
-	var _altContainer = __webpack_require__(267);
+	var _altContainer = __webpack_require__(268);
 
 	var _altContainer2 = _interopRequireDefault(_altContainer);
 
@@ -31211,7 +31286,7 @@
 	module.exports = SearchApp;
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31220,11 +31295,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchContainer = __webpack_require__(281);
+	var _SearchContainer = __webpack_require__(282);
 
 	var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
-	var _SelectedProblems = __webpack_require__(284);
+	var _SelectedProblems = __webpack_require__(285);
 
 	var _SelectedProblems2 = _interopRequireDefault(_SelectedProblems);
 
@@ -31252,7 +31327,7 @@
 	module.exports = MainSection;
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31261,11 +31336,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchResults = __webpack_require__(282);
+	var _SearchResults = __webpack_require__(283);
 
 	var _SearchResults2 = _interopRequireDefault(_SearchResults);
 
-	var _SearchActions = __webpack_require__(283);
+	var _SearchActions = __webpack_require__(284);
 
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
@@ -31297,7 +31372,7 @@
 	module.exports = SearchContainer;
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31306,7 +31381,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchActions = __webpack_require__(283);
+	var _SearchActions = __webpack_require__(284);
 
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
@@ -31345,7 +31420,7 @@
 	module.exports = SearchResults;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31400,7 +31475,7 @@
 	module.exports = _alt2.default.createActions(SearchActions);
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31409,7 +31484,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchActions = __webpack_require__(283);
+	var _SearchActions = __webpack_require__(284);
 
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
@@ -31456,7 +31531,7 @@
 	module.exports = SelectedProblems;
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31467,7 +31542,7 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _APIService = __webpack_require__(289);
+	var _APIService = __webpack_require__(265);
 
 	var _APIService2 = _interopRequireDefault(_APIService);
 
@@ -31475,7 +31550,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var SearchActions = __webpack_require__(283);
+	var SearchActions = __webpack_require__(284);
 
 	var SearchStore = function () {
 	    function SearchStore() {
@@ -31572,7 +31647,7 @@
 	*/
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31643,7 +31718,7 @@
 	module.exports = (0, _reactRouter.withRouter)(LoginPage);
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31725,7 +31800,7 @@
 	module.exports = SignupPage;
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31766,81 +31841,6 @@
 	});
 
 	module.exports = (0, _reactRouter.withRouter)(LogoutPage);
-
-/***/ },
-/* 289 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _FilterResponse = __webpack_require__(266);
-
-	var _FilterResponse2 = _interopRequireDefault(_FilterResponse);
-
-	var _Constants = __webpack_require__(265);
-
-	var _Constants2 = _interopRequireDefault(_Constants);
-
-	__webpack_require__(1);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var apiHome = '/api/v1';
-
-	var endpoints = {
-	    getProblems: apiHome + '/problems',
-	    login: apiHome + '/login',
-	    signup: apiHome + '/signup',
-	    setSolution: apiHome + '/solution',
-	    mapSymptom: apiHome + '/problem-symptom-mapping',
-	    uploadProblemSolution: apiHome + '/upload-problem-solution',
-	    setProblem: apiHome + '/problem',
-	    recommend: apiHome + '/recommend'
-	};
-
-	var defaultHeaders = {
-	    'Accept': 'application/json',
-	    'Content-Type': 'application/json',
-	    'authtoken': 'apnavadiya!@#'
-	};
-
-	var APIService = {
-
-	    getProblems: function getProblems(cb) {
-	        fetch(endpoints.getProblems, {
-	            method: 'GET',
-	            headers: {
-	                'Accept': 'application/json',
-	                'Content-Type': 'application/json',
-	                'uid': _Constants2.default.publicCredentials.uid,
-	                'authtoken': _Constants2.default.publicCredentials.authtoken
-	            }
-	        }).then(_FilterResponse2.default).then(cb);
-	    },
-
-	    login: function login(data, cb) {
-
-	        fetch(endpoints.login, {
-	            method: 'POST',
-	            headers: defaultHeaders,
-	            body: JSON.stringify({
-	                userName: data.user,
-	                password: data.pass
-	            })
-	        }).then(_FilterResponse2.default).then(cb);
-	    },
-
-	    signup: function signup(data, cb) {
-
-	        fetch(endpoints.signup, {
-	            method: 'POST',
-	            headers: defaultHeaders,
-	            body: JSON.stringify(data)
-	        }).then(_FilterResponse2.default).then(cb);
-	    }
-	};
-
-	module.exports = APIService;
 
 /***/ }
 /******/ ]);
