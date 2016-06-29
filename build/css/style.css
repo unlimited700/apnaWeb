@@ -102,6 +102,7 @@ a {
 
 .search-container input{
     width: 297px;
+    display: inline-block;
     padding: 15px 0 15px 20px;
     font-size: 16px;
     font-family: Montserrat, sans-serif;
@@ -156,6 +157,26 @@ a {
 .search-results ul li:hover {
     background-color: #bfbfbf;
 }
+
+.search-btn {
+    width: 200px;
+    padding: 7px 40px;
+    cursor: pointer;
+    background-color: #0b825f;
+    color: white;
+    outline: none;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid;
+    border-radius:2px;
+    transition: all;
+    transition-duration: 150ms;
+}
+.search-btn:hover {
+    background-color: white;
+    color: #2e2e2e;
+}
+
 .inline {
     display: inline-block;
 }
@@ -211,4 +232,79 @@ a {
 button:hover {
     background-color: white;
     color: #2e2e2e;
+}
+
+
+/**
+
+    Recommendation
+
+**/
+
+.recommend-container {
+    max-width: 600px;
+    margin: 0 auto;
+
+}
+
+.recommend-container .header{
+}
+
+.recommend-container .header .tabs {
+    list-style: none;
+    padding: 0px;
+    background-color: black;
+    color: white;
+}
+.recommend-container .header .tabs .active {
+    background-color: #2e2e2e;
+}
+.recommend-container .header .tabs li {
+    display: inline-block;
+    position: relative;
+    width: 25%;
+    text-align: center;
+    cursor: pointer;
+    background-color: #676262;
+    transition: all 150ms;
+}
+.recommend-container .header .tabs li:hover {
+    background-color: transparent;
+}
+.recommend-container .header .tabs li a {
+    color: white;
+    padding: 7px 0px;
+}
+.recommend-container .content .yoga-container {
+    list-style: none;
+    padding: 0px;
+}
+.recommend-container .content .yoga-container li {
+    background-color: #2e2e2e;
+    padding: 5px 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+.recommend-container .content .yoga-container li:hover {
+    background-color: #7b827f;
+}
+.yoga-container {
+    margin-top: -16px;
+}
+.yoga-container .content {
+    display: none;
+    background-color: #676262;
+}
+.yoga-container p {
+    padding: 0;
+    margin: 2px;
+}
+.yoga-container .details {
+    font-size: .75em;
+    float: right;
+}
+.yoga-container .active {
+    padding: 7px 20px;
+    z-index: -1;
+    display: block;
 }

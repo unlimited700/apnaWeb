@@ -18,7 +18,7 @@ var SearchResults = React.createClass({
             </div>
         );
     },
-    
+
     onAdd: function(index) {
         SearchActions.add(index);
     }

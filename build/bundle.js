@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "13eb5c083a9872d1bee3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "109d5fe3746365cc6805"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -2163,7 +2163,7 @@
 
 	var _MasterPageReact2 = _interopRequireDefault(_MasterPageReact);
 
-	var _SearchApp = __webpack_require__(280);
+	var _SearchApp = __webpack_require__(281);
 
 	var _SearchApp2 = _interopRequireDefault(_SearchApp);
 
@@ -2179,6 +2179,26 @@
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
+	var _RecommendPage = __webpack_require__(290);
+
+	var _RecommendPage2 = _interopRequireDefault(_RecommendPage);
+
+	var _Yoga = __webpack_require__(293);
+
+	var _Yoga2 = _interopRequireDefault(_Yoga);
+
+	var _Food = __webpack_require__(296);
+
+	var _Food2 = _interopRequireDefault(_Food);
+
+	var _Remedies = __webpack_require__(297);
+
+	var _Remedies2 = _interopRequireDefault(_Remedies);
+
+	var _Doctors = __webpack_require__(298);
+
+	var _Doctors2 = _interopRequireDefault(_Doctors);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -2190,7 +2210,15 @@
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _SearchApp2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _Logout2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default }),
+	        _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: '/recommend', component: _RecommendPage2.default },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Yoga2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/recommend/food', component: _Food2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/recommend/remedies', component: _Remedies2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/recommend/doctors', component: _Doctors2.default })
+	        )
 	    )
 	), document.getElementById('app'));
 
@@ -28085,7 +28113,7 @@
 
 	var _UserStore2 = _interopRequireDefault(_UserStore);
 
-	var _altContainer = __webpack_require__(268);
+	var _altContainer = __webpack_require__(269);
 
 	var _altContainer2 = _interopRequireDefault(_altContainer);
 
@@ -28477,7 +28505,11 @@
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
-	var _APIService = __webpack_require__(265);
+	var _SearchActions = __webpack_require__(265);
+
+	var _SearchActions2 = _interopRequireDefault(_SearchActions);
+
+	var _APIService = __webpack_require__(266);
 
 	var _APIService2 = _interopRequireDefault(_APIService);
 
@@ -28491,7 +28523,8 @@
 
 	        this.loginError = "";
 	        this.signupError = "";
-
+	        this.isRecommendationLoading = false;
+	        this.recommendedYoga = [];
 	        this.isLoggedIn = false;
 	        if (localStorage.email) {
 	            this.isLoggedIn = true;
@@ -30356,11 +30389,61 @@
 
 	'use strict';
 
-	var _FilterResponse = __webpack_require__(266);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _alt = __webpack_require__(250);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var SearchActions = function () {
+	    function SearchActions() {
+	        _classCallCheck(this, SearchActions);
+	    }
+
+	    _createClass(SearchActions, [{
+	        key: 'search',
+	        value: function search(text) {
+	            return text;
+	        }
+	    }, {
+	        key: 'delete',
+	        value: function _delete(index) {
+	            //        console.log("delete event called: ", index);
+	            return index;
+	        }
+	    }, {
+	        key: 'add',
+	        value: function add(text) {
+	            //        console.log("request to add", index);
+	            return text;
+	        }
+	    }, {
+	        key: 'recommend',
+	        value: function recommend() {
+	            return true;
+	        }
+	    }]);
+
+	    return SearchActions;
+	}();
+
+	module.exports = _alt2.default.createActions(SearchActions);
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _FilterResponse = __webpack_require__(267);
 
 	var _FilterResponse2 = _interopRequireDefault(_FilterResponse);
 
-	var _Constants = __webpack_require__(267);
+	var _Constants = __webpack_require__(268);
 
 	var _Constants2 = _interopRequireDefault(_Constants);
 
@@ -30386,18 +30469,30 @@
 	    'Content-Type': 'application/json',
 	    'authtoken': 'apnavadiya!@#'
 	};
+	var publicHeaders = {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	    'uid': _Constants2.default.publicCredentials.uid,
+	    'authtoken': _Constants2.default.publicCredentials.authtoken
+	};
 
 	var APIService = {
 
 	    getProblems: function getProblems(cb) {
 	        fetch(endpoints.getProblems, {
 	            method: 'GET',
-	            headers: {
-	                'Accept': 'application/json',
-	                'Content-Type': 'application/json',
-	                'uid': _Constants2.default.publicCredentials.uid,
-	                'authtoken': _Constants2.default.publicCredentials.authtoken
-	            }
+	            headers: publicHeaders
+	        }).then(_FilterResponse2.default).then(cb);
+	    },
+
+	    getRecommendations: function getRecommendations(data, cb) {
+
+	        fetch(endpoints.recommend, {
+	            method: 'POST',
+	            headers: publicHeaders,
+	            body: JSON.stringify({
+	                problems: data
+	            })
 	        }).then(_FilterResponse2.default).then(cb);
 	    },
 
@@ -30426,7 +30521,7 @@
 	module.exports = APIService;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30438,7 +30533,7 @@
 	module.exports = FilterResponse;
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30453,7 +30548,7 @@
 	module.exports = Constants;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*eslint-disable*/
@@ -30533,7 +30628,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _objectAssign = __webpack_require__(269);
+	var _objectAssign = __webpack_require__(270);
 
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -30740,16 +30835,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defineProperties = __webpack_require__(270);
+	var defineProperties = __webpack_require__(271);
 
-	var implementation = __webpack_require__(274);
-	var getPolyfill = __webpack_require__(278);
-	var shim = __webpack_require__(279);
+	var implementation = __webpack_require__(275);
+	var getPolyfill = __webpack_require__(279);
+	var shim = __webpack_require__(280);
 
 	defineProperties(implementation, {
 		implementation: implementation,
@@ -30761,13 +30856,13 @@
 
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys = __webpack_require__(271);
-	var foreach = __webpack_require__(273);
+	var keys = __webpack_require__(272);
+	var foreach = __webpack_require__(274);
 	var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
 
 	var toStr = Object.prototype.toString;
@@ -30823,7 +30918,7 @@
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30832,7 +30927,7 @@
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
 	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(272);
+	var isArgs = __webpack_require__(273);
 	var hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString');
 	var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
 	var dontEnums = [
@@ -30957,7 +31052,7 @@
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30980,7 +31075,7 @@
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports) {
 
 	
@@ -31008,18 +31103,18 @@
 
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// modified from https://github.com/es-shims/es6-shim
-	var keys = __webpack_require__(271);
-	var bind = __webpack_require__(275);
+	var keys = __webpack_require__(272);
+	var bind = __webpack_require__(276);
 	var canBeObject = function (obj) {
 		return typeof obj !== 'undefined' && obj !== null;
 	};
-	var hasSymbols = __webpack_require__(277)();
+	var hasSymbols = __webpack_require__(278)();
 	var toObject = Object;
 	var push = bind.call(Function.call, Array.prototype.push);
 	var propIsEnumerable = bind.call(Function.call, Object.prototype.propertyIsEnumerable);
@@ -31053,16 +31148,16 @@
 
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var implementation = __webpack_require__(276);
+	var implementation = __webpack_require__(277);
 
 	module.exports = Function.prototype.bind || implementation;
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports) {
 
 	var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
@@ -31116,12 +31211,12 @@
 
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys = __webpack_require__(271);
+	var keys = __webpack_require__(272);
 
 	module.exports = function hasSymbols() {
 		if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
@@ -31159,12 +31254,12 @@
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var implementation = __webpack_require__(274);
+	var implementation = __webpack_require__(275);
 
 	var lacksProperEnumerationOrder = function () {
 		if (!Object.assign) {
@@ -31215,13 +31310,13 @@
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var define = __webpack_require__(270);
-	var getPolyfill = __webpack_require__(278);
+	var define = __webpack_require__(271);
+	var getPolyfill = __webpack_require__(279);
 
 	module.exports = function shimAssign() {
 		var polyfill = getPolyfill();
@@ -31235,7 +31330,7 @@
 
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31244,7 +31339,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _MainSection = __webpack_require__(281);
+	var _MainSection = __webpack_require__(282);
 
 	var _MainSection2 = _interopRequireDefault(_MainSection);
 
@@ -31252,7 +31347,7 @@
 
 	var _SearchStore2 = _interopRequireDefault(_SearchStore);
 
-	var _altContainer = __webpack_require__(268);
+	var _altContainer = __webpack_require__(269);
 
 	var _altContainer2 = _interopRequireDefault(_altContainer);
 
@@ -31286,7 +31381,7 @@
 	module.exports = SearchApp;
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31295,13 +31390,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchContainer = __webpack_require__(282);
+	var _SearchContainer = __webpack_require__(283);
 
 	var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
 	var _SelectedProblems = __webpack_require__(285);
 
 	var _SelectedProblems2 = _interopRequireDefault(_SelectedProblems);
+
+	var _SearchActions = __webpack_require__(265);
+
+	var _SearchActions2 = _interopRequireDefault(_SearchActions);
+
+	var _reactRouter = __webpack_require__(51);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31312,22 +31413,40 @@
 	        return _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_SearchContainer2.default, { searchTerm: this.props.searchTerm, searchResults: this.props.searchResults }),
+	            _react2.default.createElement(_SearchContainer2.default, { searchTerm: this.props.searchTerm, searchResults: this.props.searchResults, onChange: this._searchQuery, onAdd: true }),
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	                'div',
 	                { className: 'selected' },
-	                _react2.default.createElement(_SelectedProblems2.default, { selected: this.props.selectedProblems })
+	                this.props.selectedProblems.length ? _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(_SelectedProblems2.default, { selected: this.props.selectedProblems }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'search-btn', onClick: this._searchRecommend },
+	                        ' Go '
+	                    )
+	                ) : ""
 	            )
 	        );
+	    },
+
+	    _searchQuery: function _searchQuery(event) {
+	        _SearchActions2.default.search(event.target.value);
+	    },
+	    _searchRecommend: function _searchRecommend(event) {
+	        _SearchActions2.default.recommend();
+	        this.props.router.push('/recommend');
 	    }
 	});
 
-	module.exports = MainSection;
+	module.exports = (0, _reactRouter.withRouter)(MainSection);
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31336,13 +31455,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchResults = __webpack_require__(283);
+	var _SearchResults = __webpack_require__(284);
 
 	var _SearchResults2 = _interopRequireDefault(_SearchResults);
-
-	var _SearchActions = __webpack_require__(284);
-
-	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31357,22 +31472,23 @@
 	            _react2.default.createElement(
 	                'h2',
 	                null,
-	                'Search'
+	                'apnaVaidya'
 	            ),
-	            _react2.default.createElement('input', { type: 'text', value: this.props.searchTerm, placeholder: 'Search', onChange: this._searchQuery }),
-	            _react2.default.createElement(_SearchResults2.default, { all: this.props.searchResults, onAdd: this.onAdd })
+	            _react2.default.createElement('input', { type: 'text', value: this.props.searchTerm, placeholder: 'Search', onChange: this.props.onChange }),
+	            this.props.searchResults.length ? _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_SearchResults2.default, { all: this.props.searchResults, onAdd: this.props.onAdd })
+	            ) : ""
 	        );
-	    },
-
-	    _searchQuery: function _searchQuery(event) {
-	        _SearchActions2.default.search(event.target.value);
 	    }
+
 	});
 
 	module.exports = SearchContainer;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31381,7 +31497,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchActions = __webpack_require__(284);
+	var _SearchActions = __webpack_require__(265);
 
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
@@ -31420,61 +31536,6 @@
 	module.exports = SearchResults;
 
 /***/ },
-/* 284 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _alt = __webpack_require__(250);
-
-	var _alt2 = _interopRequireDefault(_alt);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var SearchActions = function () {
-	    function SearchActions() {
-	        _classCallCheck(this, SearchActions);
-	    }
-
-	    _createClass(SearchActions, [{
-	        key: 'search',
-	        value: function search(text) {
-	            return text;
-	        }
-	    }, {
-	        key: 'delete',
-	        value: function _delete(index) {
-	            //        console.log("delete event called: ", index);
-	            return index;
-	        }
-	    }, {
-	        key: 'add',
-	        value: function add(text) {
-	            //        console.log("request to add", index);
-	            return text;
-	        }
-	    }, {
-	        key: 'problemsFetchFailed',
-	        value: function problemsFetchFailed(errorMessage) {
-	            return errorMessage;
-	        }
-	    }, {
-	        key: 'problemsLoading',
-	        value: function problemsLoading(problem) {
-	            return problem;
-	        }
-	    }]);
-
-	    return SearchActions;
-	}();
-
-	module.exports = _alt2.default.createActions(SearchActions);
-
-/***/ },
 /* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31484,7 +31545,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchActions = __webpack_require__(284);
+	var _SearchActions = __webpack_require__(265);
 
 	var _SearchActions2 = _interopRequireDefault(_SearchActions);
 
@@ -31542,7 +31603,7 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _APIService = __webpack_require__(265);
+	var _APIService = __webpack_require__(266);
 
 	var _APIService2 = _interopRequireDefault(_APIService);
 
@@ -31550,7 +31611,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var SearchActions = __webpack_require__(284);
+	var SearchActions = __webpack_require__(265);
 
 	var SearchStore = function () {
 	    function SearchStore() {
@@ -31559,7 +31620,8 @@
 	        this.selectedProblems = [];
 	        this.searchResults = [];
 	        this.searchTerm = "";
-
+	        this.recommendation = [];
+	        this.isRecommendationLoading = true;
 	        var object = this;
 
 	        function status(response) {
@@ -31579,26 +31641,14 @@
 	        });
 
 	        this.bindListeners({
-	            handleSearch: SearchActions.SEARCH,
+	            handleAdd: SearchActions.ADD,
 	            handleDelete: SearchActions.DELETE,
-	            handleAdd: SearchActions.ADD
+	            handleSearch: SearchActions.SEARCH,
+	            handleRecommend: SearchActions.RECOMMEND
 	        });
 	    }
 
 	    _createClass(SearchStore, [{
-	        key: 'handleSearch',
-	        value: function handleSearch(text) {
-	            this.searchResults = [];
-	            this.searchTerm = text;
-	            if (!text) {
-	                return;
-	            }
-
-	            for (var problem in this.allProblems) {
-	                if (this.allProblems[problem].match(text)) this.searchResults.push(this.allProblems[problem]);
-	            }
-	        }
-	    }, {
 	        key: 'handleAdd',
 	        value: function handleAdd(text) {
 	            var added = this.allProblems.splice(this.allProblems.indexOf(text), 1)[0];
@@ -31618,33 +31668,44 @@
 	            }
 	            return true;
 	        }
+	    }, {
+	        key: 'handleRecommend',
+	        value: function handleRecommend() {
+	            var _this = this;
+
+	            this.setState({ isRecommendationLoading: true });
+	            _APIService2.default.getRecommendations(this.selectedProblems, function (response) {
+	                _this.setState({
+	                    isRecommendationLoading: false,
+	                    recommendation: response
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'handleSearch',
+	        value: function handleSearch(text) {
+	            this.searchResults = [];
+	            this.searchTerm = text;
+	            if (!text) {
+	                return;
+	            }
+	            var pattern = new RegExp("^" + text, 'g');
+
+	            for (var problem in this.allProblems) {
+	                if (this.allProblems[problem].toLowerCase().match(pattern)) {
+	                    this.searchResults.push(this.allProblems[problem]);
+	                }
+	            }
+	            for (var problem in this.allProblems) {
+	                if (!(this.searchResults.indexOf(this.allProblems[problem]) > -1) && this.allProblems[problem].toLowerCase().match(text)) this.searchResults.push(this.allProblems[problem]);
+	            }
+	        }
 	    }]);
 
 	    return SearchStore;
 	}();
 
 	module.exports = _alt2.default.createStore(SearchStore, 'SearchStore');
-
-	/**
-	 *
-	 var request = new XMLHttpRequest();
-	 request.onreadystatechange = (e) => {
-	  if (request.readyState !== 4) {
-	    return;
-	  }
-
-	  if (request.status === 200) {
-	    console.log('success', request.responseText);
-	  } else {
-	    console.warn('error');
-	  }
-	};
-	 request.open('GET', 'http://localhost:3007/v1/problems');
-	 request.setRequestHeader('uid', 1);
-	 request.setRequestHeader('authtoken', 'e8008f83-9f70-4df0-b7ea-676b22d9d335-malikanshul29@gmail.com-1466419597165');
-	 request.setRequestHeader('Content-Type', 'application/json');
-	 *request.send()
-	*/
 
 /***/ },
 /* 287 */
@@ -31841,6 +31902,415 @@
 	});
 
 	module.exports = (0, _reactRouter.withRouter)(LogoutPage);
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _altContainer = __webpack_require__(269);
+
+	var _altContainer2 = _interopRequireDefault(_altContainer);
+
+	var _Header = __webpack_require__(291);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _Footer = __webpack_require__(292);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _UserStore = __webpack_require__(249);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _SearchStore = __webpack_require__(286);
+
+	var _SearchStore2 = _interopRequireDefault(_SearchStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RecommendPage = _react2.default.createClass({
+	    displayName: 'RecommendPage',
+
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'recommend-container' },
+	            _react2.default.createElement(_Header2.default, null),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'content' },
+	                _react2.default.createElement(
+	                    _altContainer2.default,
+	                    { store: _SearchStore2.default },
+	                    this.props.children
+	                )
+	            ),
+	            _react2.default.createElement(_Footer2.default, null)
+	        );
+	    }
+
+	});
+
+	module.exports = RecommendPage;
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(51);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RecommendationHeader = _react2.default.createClass({
+	    displayName: 'RecommendationHeader',
+
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'header' },
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'tabs' },
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/recommend', activeClassName: 'active', onlyActiveOnIndex: true },
+	                        ' Yoga '
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/recommend/food', activeClassName: 'active' },
+	                        ' Food '
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/recommend/remedies', activeClassName: 'active' },
+	                        ' Remedies '
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/recommend/doctors', activeClassName: 'active' },
+	                        ' Doctors '
+	                    )
+	                )
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = RecommendationHeader;
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RecommendationFooter = _react2.default.createClass({
+	    displayName: 'RecommendationFooter',
+
+
+	    render: function render() {
+	        return _react2.default.createElement('div', null);
+	    }
+
+	});
+
+	module.exports = RecommendationFooter;
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SolutionDescription = __webpack_require__(294);
+
+	var _SolutionDescription2 = _interopRequireDefault(_SolutionDescription);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var YogaComponent = _react2.default.createClass({
+	    displayName: 'YogaComponent',
+	    getInitialState: function getInitialState() {
+	        return {
+	            currentlyActive: -1
+	        };
+	    },
+
+	    render: function render() {
+	        var _this = this;
+
+	        if (this.props.isRecommendationLoading) {
+	            return _react2.default.createElement(
+	                'center',
+	                null,
+	                'Loading...'
+	            );
+	        } else if (!this.props.recommendation.recommendedYoga.length) {
+	            return _react2.default.createElement(
+	                'center',
+	                null,
+	                'Sorry, No results found.'
+	            );
+	        } else {
+
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'yoga-container', onClick: this.onClick },
+	                this.props.recommendation.recommendedYoga.map(function (ob, i) {
+	                    var onClick = _this.onClick.bind(_this, i);
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { key: i },
+	                        _react2.default.createElement(
+	                            'li',
+	                            { 'data-tag': i, onClick: onClick },
+	                            ob.solution,
+	                            ' ',
+	                            _react2.default.createElement(
+	                                'p',
+	                                { className: 'details' },
+	                                ob.duration,
+	                                'minutes for ',
+	                                ob.days,
+	                                ' days '
+	                            )
+	                        ),
+	                        _react2.default.createElement(_SolutionDescription2.default, { 'data-tag': i, isActive: _this.state.currentlyActive == i,
+	                            content: ob })
+	                    );
+	                })
+	            );
+	        }
+	    },
+
+	    onClick: function onClick(id) {
+	        var id = parseInt(id);
+	        if (id >= 0) {
+	            if (this.state.currentlyActive == id) id = -1;
+	            this.setState({
+	                currentlyActive: id
+	            });
+	        }
+	    }
+	});
+
+	module.exports = YogaComponent;
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(295);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Description = _react2.default.createClass({
+	    displayName: 'Description',
+
+
+	    render: function render() {
+	        var classes = (0, _classnames2.default)('content', { active: this.props.isActive });
+	        return _react2.default.createElement(
+	            'div',
+	            { className: classes },
+	            this.props.content.step.split("\n").map(function (text, i) {
+	                return _react2.default.createElement(
+	                    'p',
+	                    { key: i },
+	                    ' ',
+	                    text
+	                );
+	            })
+	        );
+	    }
+	});
+
+	module.exports = Description;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FoodComponent = _react2.default.createClass({
+	    displayName: 'FoodComponent',
+
+	    render: function render() {
+
+	        return _react2.default.createElement(
+	            'center',
+	            null,
+	            'Nothing to display'
+	        );
+	    }
+	});
+
+	module.exports = FoodComponent;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RemediesComponent = _react2.default.createClass({
+	    displayName: 'RemediesComponent',
+
+	    render: function render() {
+
+	        return _react2.default.createElement(
+	            'center',
+	            null,
+	            'Nothing to display'
+	        );
+	    }
+	});
+
+	module.exports = RemediesComponent;
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(14);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DoctorsComponent = _react2.default.createClass({
+	    displayName: 'DoctorsComponent',
+
+	    render: function render() {
+
+	        return _react2.default.createElement(
+	            'center',
+	            null,
+	            'Nothing to display'
+	        );
+	    }
+	});
+
+	module.exports = DoctorsComponent;
 
 /***/ }
 /******/ ]);

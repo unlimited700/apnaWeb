@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import DocumentTitle from 'react-document-title';
-import Header from './../components/Header.react.js';
+import Header from './Header.react.js';
 import UserStore from '../stores/user/UserStore';
 import AltContainer from 'alt-container';
 var MasterPage = React.createClass({

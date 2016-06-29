@@ -15,13 +15,10 @@ class SearchActions {
         return text;
     }
 
-    problemsFetchFailed(errorMessage) {
-        return errorMessage;
+    recommend() {
+        return true;
     }
 
-    problemsLoading(problem) {
-        return problem;
-    }
 }
 
 module.exports = alt.createActions(SearchActions);

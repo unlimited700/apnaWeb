@@ -10,7 +10,8 @@ class SearchStore {
         this.selectedProblems = [];
         this.searchResults = [];
         this.searchTerm = "";
-
+        this.recommendation = [];
+        this.isRecommendationLoading = true;
         var object = this;
 
         function status(response) {
@@ -30,23 +31,15 @@ class SearchStore {
             });
 
         this.bindListeners({
+            handleAdd: SearchActions.ADD,
+            handleDelete: SearchActions.DELETE, 
             handleSearch: SearchActions.SEARCH,
-            handleDelete: SearchActions.DELETE,
-            handleAdd: SearchActions.ADD
+            handleRecommend: SearchActions.RECOMMEND,
         });
     }
-    handleSearch(text) {
-        this.searchResults = [];
-        this.searchTerm = text;
-        if(!text) {
-            return;
-        }
 
-        for( var problem in this.allProblems) {
-            if(this.allProblems[problem].match(text))
-                this.searchResults.push(this.allProblems[problem]);
-        }
-    };
+
+
     handleAdd(text) {
         var added = this.allProblems.splice(this.allProblems.indexOf(text), 1)[0];
         if(added) {
@@ -65,28 +58,38 @@ class SearchStore {
         return true;
     }
 
+    handleRecommend() {
+        this.setState({isRecommendationLoading: true});
+        APIService.getRecommendations(this.selectedProblems, response => {
+            this.setState({
+                isRecommendationLoading: false,
+                recommendation: response
+            });
+        })
+    }
+
+
+    handleSearch(text) {
+        this.searchResults = [];
+        this.searchTerm = text;
+        if(!text) {
+            return;
+        }
+        var pattern = new RegExp("^"+text, 'g');
+
+        for( var problem in this.allProblems) {
+            if(this.allProblems[problem].toLowerCase().match(pattern)) {
+                this.searchResults.push(this.allProblems[problem])
+            }
+        }
+        for( var problem in this.allProblems) {
+            if(!(this.searchResults.indexOf(this.allProblems[problem]) > -1 ) && this.allProblems[problem].toLowerCase().match(text) )
+                this.searchResults.push(this.allProblems[problem]);
+        }
+    }
+
+
+
 }
 
 module.exports = alt.createStore(SearchStore, 'SearchStore');
-
-
-/**
- *
- var request = new XMLHttpRequest();
- request.onreadystatechange = (e) => {
-  if (request.readyState !== 4) {
-    return;
-  }
-
-  if (request.status === 200) {
-    console.log('success', request.responseText);
-  } else {
-    console.warn('error');
-  }
-};
- request.open('GET', 'http://localhost:3007/v1/problems');
- request.setRequestHeader('uid', 1);
- request.setRequestHeader('authtoken', 'e8008f83-9f70-4df0-b7ea-676b22d9d335-malikanshul29@gmail.com-1466419597165');
- request.setRequestHeader('Content-Type', 'application/json');
- *request.send()
-*/

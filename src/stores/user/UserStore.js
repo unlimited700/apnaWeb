@@ -1,6 +1,7 @@
 import React from 'react';
 import alt from '../../alt';
 import UserActions from '../../actions/user/UserActions';
+import SearchActions from '../../actions/search/SearchActions';
 import APIService from '../../services/APIService';
 
 class UserStore {
@@ -8,7 +9,8 @@ class UserStore {
     constructor() {
         this.loginError = "";
         this.signupError = "";
-
+        this.isRecommendationLoading = false;
+        this.recommendedYoga = [];
         this.isLoggedIn = false;
         if(localStorage.email) {
             this.isLoggedIn = true;
@@ -79,6 +81,7 @@ class UserStore {
             user: {}
         });
     }
+
 
     handleSignup(data) {
         var error = "";

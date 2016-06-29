@@ -1,22 +1,27 @@
 import React from 'react';
-import SearchResults from './SearchResults.react';
-import SearchActions from '../../actions/search/SearchActions';
+import SearchResults from './SearchResults.react'
+
 
 var SearchContainer = React.createClass({
     
     render: function() {
         return (
             <div className="search-container">
-                <h2>Search</h2>
-                <input type="text" value={this.props.searchTerm} placeholder="Search" onChange={ this._searchQuery }/>
-                <SearchResults all = {this.props.searchResults} onAdd={this.onAdd}/>
+                <h2>apnaVaidya</h2>
+                <input type="text" value={this.props.searchTerm} placeholder="Search" onChange={ this.props.onChange }/>
+
+                {
+                    this.props.searchResults.length ? (
+                        <div>
+                            <SearchResults all = {this.props.searchResults} onAdd={this.props.onAdd}/>
+                        </div>
+                    ) : ""
+                }
             </div>
         );
     },
 
-    _searchQuery(event) {
-        SearchActions.search(event.target.value);
-    }
+
 
 
 });

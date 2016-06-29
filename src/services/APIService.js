@@ -20,20 +20,32 @@ var defaultHeaders = {
     'Content-Type' : 'application/json',
     'authtoken': 'apnavadiya!@#'
 }
+var publicHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'uid': Constants.publicCredentials.uid,
+    'authtoken': Constants.publicCredentials.authtoken,
+}
 
 var APIService = {
 
     getProblems: function(cb) {
         fetch(endpoints.getProblems, {
             method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'uid': Constants.publicCredentials.uid,
-                'authtoken': Constants.publicCredentials.authtoken,
-            }
+            headers: publicHeaders
         }).then(FilterResponse).then(cb);
 
+    },
+
+    getRecommendations: function(data, cb) {
+        
+        fetch(endpoints.recommend, {
+            method: 'POST',
+            headers: publicHeaders,
+            body: JSON.stringify({
+                problems: data
+            })
+        }).then(FilterResponse).then(cb);
     },
 
     login: function(data, cb) {
