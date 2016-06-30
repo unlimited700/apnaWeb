@@ -54,8 +54,8 @@ a {
 
 .search-container {
     margin: 0 auto;
-    margin-top: 10%;
-    width: 297px;
+    margin-top: 7%;
+    width: 260px;
     text-align: center;
     background-color: #564756;
 }
@@ -101,7 +101,7 @@ a {
 }
 
 .search-container input{
-    width: 297px;
+    width: 260px;
     display: inline-block;
     padding: 15px 0 15px 20px;
     font-size: 16px;
@@ -134,7 +134,7 @@ a {
 }
 
 .search-results {
-    width: 297px;
+    width: 260px;
     margin: 0 auto;
     position: absolute;
     z-index: 9;
@@ -190,11 +190,15 @@ a {
 .login-form {
     text-align: center;
 }
+.signup-container {
+    min-width:300px;
+}
 .signup-form {
     text-align: center;
 }
-.form-container input[type="text"], .form-container input[type=password], .form-container input[type="textarea"], .form-container input[type="email"], .form-container input[type="number"] {
-    width: 200px;
+
+.form-container input[type="text"], .form-container input[type=password], .form-container input[type="email"], .form-container input[type="number"], .form-container textarea {
+    width: 100%;
     padding: 10px 0 10px 15px;
     font-size: 16px;
     font-family: Montserrat, sans-serif;
@@ -215,8 +219,9 @@ a {
     width: 45px;
 }
 
+
 .form-container button {
-    width: 200px;
+    width: 230px;
     padding: 7px 40px;
     cursor: pointer;
     background-color: #0b825f;
@@ -275,36 +280,78 @@ button:hover {
     color: white;
     padding: 7px 0px;
 }
-.recommend-container .content .yoga-container {
+.recommend-container .content .solution-container {
     list-style: none;
     padding: 0px;
 }
-.recommend-container .content .yoga-container li {
+.recommend-container .content .solution-container li {
     background-color: #2e2e2e;
     padding: 5px 20px;
     cursor: pointer;
     z-index: 1;
 }
-.recommend-container .content .yoga-container li:hover {
+.recommend-container .content .solution-container li:hover {
     background-color: #7b827f;
 }
-.yoga-container {
+.solution-container {
     margin-top: -16px;
 }
-.yoga-container .content {
+.solution-container .content {
     display: none;
     background-color: #676262;
 }
-.yoga-container p {
+.solution-container p {
     padding: 0;
     margin: 2px;
 }
-.yoga-container .details {
+.solution-container .details {
     font-size: .75em;
     float: right;
 }
-.yoga-container .active {
+.solution-container .active {
     padding: 7px 20px;
     z-index: -1;
     display: block;
+}
+
+
+/**
+    Dashboard
+
+*/
+
+.green-btn {
+    width: 260px;
+    padding: 7px 40px;
+    cursor: pointer;
+    background-color: #0b825f;
+    color: white;
+    outline: none;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid;
+    border-radius:2px;
+    transition: all;
+    transition-duration: 150ms;
+}
+.green-btn:hover {
+    background-color: white;
+    color: #2e2e2e;
+}
+
+.dash-container {
+
+    padding-top: 20px;
+    text-align: center;
+
+}
+.problem-container {
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 360px;
+    text-align: center;
+    background-color: #564756;
+}
+.problem-container textarea {
+    min-height: 150px;
 }

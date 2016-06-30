@@ -60,6 +60,39 @@ var APIService = {
         }).then(FilterResponse).then(cb);
     },
 
+    setProblems: function (data, cb) {
+
+        fetch(endpoints.setProblem, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'uid': data.uid,
+                'authtoken': data.authtoken
+            },
+            body: JSON.stringify({
+                problems: data.problems
+            })
+
+        }).then(FilterResponse).then(cb);
+
+    },
+
+    setSolution(data, cb) {
+
+        fetch(endpoints.setSolution, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                auth: defaultHeaders.authtoken,
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                solutions: [data.solution]
+            })
+        }).then(FilterResponse).then(cb);
+    },
+
     signup: function(data, cb) {
 
         fetch(endpoints.signup, {

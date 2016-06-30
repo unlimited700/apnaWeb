@@ -10,7 +10,7 @@ var LoginPage = React.createClass({
     },
     render() {
         return (
-            <div>
+            <div className="search-container">
                 <center><h3>Login</h3></center>
                 <form className="form-container login-form" onSubmit={ this._login }>
                     <p>{this.props.loginError}</p>

@@ -10,6 +10,7 @@ class UserStore {
         this.loginError = "";
         this.signupError = "";
         this.isRecommendationLoading = false;
+        this.addedProblemStatus = "";
         this.recommendedYoga = [];
         this.isLoggedIn = false;
         if(localStorage.email) {
@@ -28,10 +29,63 @@ class UserStore {
             handleLogin: UserActions.LOGIN,
             handleLogout: UserActions.LOGOUT,
             handleSignup: UserActions.SIGNUP,
+            handleAddProblem: UserActions.ADD_PROBLEM,
+            handleAddSolution: UserActions.ADD_SOLUTION
         })
     }
 
+    handleAddProblem(data) {
+        if(data.problem === "" || data.probType === "") {
+            this.setState({addedProblemStatus: "Please give some info to add."});
+            return ;
+        }
 
+        this.setState({addedProblemStatus: "Processing ..."});
+
+        APIService.setProblems({
+            problems: [data],
+            uid: this.user.uid,
+            authtoken: this.user.token
+        }, function(response) {
+            var message = "";
+            if(response.responseCode == 200) {
+                message = "Successfully added.";
+            }
+            else {
+                message = "Something went wrong, please try again.";
+            }
+
+            this.setState({addedProblemStatus: message});
+        });
+
+    }
+
+    handleAddSolution(data) {
+        if(data.solution === "" || data.step === "") {
+            this.setState({addedSolutionStatus: "Please enter all solution details."})
+            return ;
+        }
+        else {
+            this.setState({addedSolutionStatus: "Processing..."});
+        }
+
+        APIService.setSolution({
+            solution: data,
+            uid: this.user.uid,
+            authtoken: this.user.token
+        }, response => {
+            var message = "";
+            if(response.responseCode == 200) {
+                message = "Successfully added.";
+            }
+            else {
+                message = "Something went wrong, please tryy again.";
+            }
+
+            this.setState({addedSolutionStatus: message});
+        });
+
+    }
 
     handleLogin(data) {
         if(!(data.user || !data.pass)) {

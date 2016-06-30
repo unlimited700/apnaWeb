@@ -18,7 +18,7 @@ var YogaComponent = React.createClass({
 
             return (
 
-                <ul className="yoga-container" onClick={this.onClick}>
+                <ul className="solution-container" onClick={this.onClick}>
                     { this.props.recommendation.recommendedYoga.map((ob, i) => {
                         var onClick = this.onClick.bind(this, i);
                         return (
