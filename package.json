@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "compile": "NODE_ENV=production webpack -p"
+    "compile": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
+    "run": " NODE_ENV=production node server.js"
   },
   "author": "",
   "license": "BSD-2-Clause",

@@ -14,21 +14,10 @@ class SearchStore {
         this.isRecommendationLoading = true;
         var object = this;
 
-        function status(response) {
-            if (response.status >= 200 && response.status < 300) {
-                return Promise.resolve(response)
-            } else {
-                return Promise.reject(new Error(response.statusText))
-            }
-        }
-
-        function json(response) {
-            return response.json()
-        }
-
-        APIService.getProblems(function(data) {
-                object.allProblems = data.problems;
-            });
+        APIService.getProblems(data => {
+            this.setState({allProblems: data.problems});
+            this.handleSearch();
+        });
 
         this.bindListeners({
             handleAdd: SearchActions.ADD,
@@ -60,16 +49,29 @@ class SearchStore {
 
     handleRecommend() {
         this.setState({isRecommendationLoading: true});
-        APIService.getRecommendations(this.selectedProblems, response => {
+        if(this.selectedProblems.length) {
+            APIService.getRecommendations(this.selectedProblems, response => {
+                this.setState({
+                    isRecommendationLoading: false,
+                    recommendation: response
+                });
+            })
+        }
+        else {
             this.setState({
                 isRecommendationLoading: false,
-                recommendation: response
-            });
-        })
+                recommendation: {
+                    recommendedYoga: [],
+                    recommendedFood: [],
+                    recommendedRemedies: [],
+                    recommendedDoctors: []
+                }
+            })
+        }
     }
 
 
-    handleSearch(text) {
+    handleSearch(text=this.searchTerm) {
         this.searchResults = [];
         this.searchTerm = text;
         if(!text) {

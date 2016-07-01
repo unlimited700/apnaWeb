@@ -11,10 +11,10 @@ var MasterPage = React.createClass({
         return (
             <DocumentTitle title="ApnaVaidya">
                 <div>
-                    <AltContainer store={UserStore}>
+                    <AltContainer stores={{User: UserStore}}>
                         <Header />
                     </AltContainer>
-                    <AltContainer store={UserStore}>
+                    <AltContainer stores={{User: UserStore}}>
 
                         {this.props.children}
                     </AltContainer>

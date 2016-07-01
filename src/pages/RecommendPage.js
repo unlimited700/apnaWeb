@@ -11,9 +11,11 @@ var RecommendPage = React.createClass({
         return (
 
             <div className="recommend-container">
-                <Header />
+                <AltContainer stores={{ Search: SearchStore}}>
+                    <Header />
+                </AltContainer>
                 <div className="content">
-                    <AltContainer store={SearchStore}>
+                    <AltContainer stores={{ Search: SearchStore, User: UserStore}}>
                         { this.props.children }
                     </AltContainer>
                 </div>

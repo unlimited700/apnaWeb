@@ -1,14 +1,13 @@
 import React from 'react';
 import SearchResults from './SearchResults.react'
-
+import SearchActions from '../../actions/search/SearchActions';
 
 var SearchContainer = React.createClass({
     
     render: function() {
         return (
             <div className="search-container">
-                
-                <input type="text" value={this.props.searchTerm} placeholder="Search" onChange={ this.props.onChange }/>
+                <input type="text" value={this.props.searchTerm} placeholder="Search" onChange={ this.onChange }/>
 
                 {
                     this.props.searchResults.length ? (
@@ -21,6 +20,9 @@ var SearchContainer = React.createClass({
         );
     },
 
+    onChange(event) {
+        SearchActions.search(event.target.value);
+    }
 
 
 

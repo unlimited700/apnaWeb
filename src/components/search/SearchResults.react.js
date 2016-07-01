@@ -21,6 +21,7 @@ var SearchResults = React.createClass({
 
     onAdd: function(index) {
         SearchActions.add(index);
+        SearchActions.recommend();
     }
 });
 

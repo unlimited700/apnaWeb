@@ -8,10 +8,10 @@ var RemediesComponent = React.createClass({
         }
     },
     render: function () {
-        if(this.props.isRecommendationLoading) {
+        if(this.props.Search.isRecommendationLoading) {
             return (<center>Loading...</center>);
         }
-        else if(!this.props.recommendation.recommendedRemedies.length) {
+        else if(!this.props.Search.recommendation.recommendedRemedies.length) {
             return (<center>Sorry, No results found.</center>);
         }
         else {
@@ -19,7 +19,7 @@ var RemediesComponent = React.createClass({
             return (
 
                 <ul className="solution-container" onClick={this.onClick}>
-                    { this.props.recommendation.recommendedRemedies.map((ob, i) => {
+                    { this.props.Search.recommendation.recommendedRemedies.map((ob, i) => {
                         var onClick = this.onClick.bind(this, i);
                         return (
                             <div key={i}>

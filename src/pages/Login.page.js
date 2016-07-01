@@ -4,7 +4,7 @@ import UserActions from '../actions/user/UserActions';
 var LoginPage = React.createClass({
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isLoggedIn) {
+        if(nextProps.User.isLoggedIn) {
             this.props.router.push('/');
         }
     },
@@ -13,7 +13,7 @@ var LoginPage = React.createClass({
             <div className="search-container">
                 <center><h3>Login</h3></center>
                 <form className="form-container login-form" onSubmit={ this._login }>
-                    <p>{this.props.loginError}</p>
+                    <p>{this.props.User.loginError}</p>
                     <input type="email" placeholder="Email"/><br />
                     <input type="password" placeholder="Password"/><br /><br />
 

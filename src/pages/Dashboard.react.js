@@ -7,7 +7,7 @@ var DashboardPage = React.createClass({
     render: function () {
         return (
             <div className="dash-container">
-                <AltContainer store={UserStore}>
+                <AltContainer stores={{User: UserStore}}>
                     {this.props.children}
                 </AltContainer>
             </div>

@@ -15,6 +15,7 @@ var SelectedItem = React.createClass({
 var SelectedProblems = React.createClass({
     _onDestroyClick: function(index) {
         SearchActions.delete(index);
+        SearchActions.recommend();
     },
     render: function () {
         var selected = this.props.selected;

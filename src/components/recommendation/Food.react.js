@@ -8,10 +8,10 @@ var FoodComponent = React.createClass({
         }
     },
     render: function () {
-        if(this.props.isRecommendationLoading) {
+        if(this.props.Search.isRecommendationLoading) {
             return (<center>Loading...</center>);
         }
-        else if(!this.props.recommendation.recommendedFood.length) {
+        else if(!this.props.Search.recommendation.recommendedFood.length) {
             return (<center>Sorry, No results found.</center>);
         }
         else {
@@ -19,7 +19,7 @@ var FoodComponent = React.createClass({
             return (
 
                 <ul className="solution-container" onClick={this.onClick}>
-                    { this.props.recommendation.recommendedFood.map((ob, i) => {
+                    { this.props.Search.recommendation.recommendedFood.map((ob, i) => {
                         var onClick = this.onClick.bind(this, i);
                         return (
                             <div key={i}>

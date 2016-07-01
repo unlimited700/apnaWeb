@@ -7,7 +7,7 @@ var SignupPage = React.createClass({
             <div className="search-container signup-container">
                 <center><h3>Signup</h3></center>
                 <form className="signup-form form form-container" onSubmit={ this._signup }>
-                    <p>{this.props.signupError}</p>
+                    <p>{this.props.User.signupError}</p>
                     <input type="text" placeholder="Name"/>
                     <input type="text" placeholder="example@example.com"/><br />
                     <input type="number" placeholder="Phone"/>

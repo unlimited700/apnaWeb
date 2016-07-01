@@ -11,17 +11,13 @@ var SearchApp = React.createClass({
     render: function() {
         return (
             <div>
-                <AltContainer store={SearchStore}>
+                <AltContainer stores={{Search: SearchStore}}>
                     <MainSection />
                 </AltContainer>
 
             </div>
         );
     },
-
-    _onChange: function() {
-        this.setState(SearchStore.getState());
-    }
 
 });
 

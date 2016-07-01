@@ -4,6 +4,7 @@ var BUILD_DIR = path.resolve(__dirname, 'build/');
 var APP_DIR = path.resolve(__dirname, 'src/');
 
 var config = {
+    devtool: 'eval',
   entry: [
       'whatwg-fetch',
       'webpack-hot-middleware/client',
