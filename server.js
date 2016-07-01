@@ -12,24 +12,32 @@ var compiler = webpack(config);
 
 var app = express();
 
+var isProduction = process.env.NODE_ENV === 'production';
+var port = 3000;
+
+
 app.use(express.static(__dirname + '/build'));
+
 
 app.use(WebpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     noInfo: false,
+    hot: true,
     quite: false,
     stats: {colors: true}
 }));
 
-app.use(WebpackHotMiddlware(compiler, {
-    log: console.log
-}))
+if(!isProduction) {
+    app.use(WebpackHotMiddlware(compiler, {
+        log: console.log
+    }))
+}
 
 
 
 app.use('/api', function(req, res) {
     console.log("request coming: " + req.url);
-    var url = "http://api.apnavaidya.com" + req.url;
+    var url = "http://localhost:3007" + req.url;
     req.pipe(request(url)).pipe(res);
 });
 
@@ -37,4 +45,6 @@ app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(port, function() {
+    console.log("Server listening on ", port);
+});

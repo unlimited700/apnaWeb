@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dc00afb902257c8fc242"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7d35f7aa65af11d454c2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -570,7 +570,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
+/******/ 	__webpack_require__.p = "/build/";
 
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -31476,7 +31476,7 @@
 	                        null,
 	                        this.props.isLoggedIn ? _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: '/dash' },
+	                            { to: '/dash', activeClassName: 'active' },
 	                            'Dashboard'
 	                        ) : ""
 	                    ),
@@ -31581,11 +31581,26 @@
 
 	var MainSection = _react2.default.createClass({
 	    displayName: 'MainSection',
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        if (nextProps.selectedProblems.length) {
+	            this.props.router.push('/recommend');
+	        }
+	    },
 
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
 	            null,
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	                'center',
+	                null,
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'apnaVaidya'
+	                )
+	            ),
 	            _react2.default.createElement(_SearchContainer2.default, { searchTerm: this.props.searchTerm, searchResults: this.props.searchResults, onChange: this._searchQuery, onAdd: true }),
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement('br', null),
@@ -31595,13 +31610,7 @@
 	                this.props.selectedProblems.length ? _react2.default.createElement(
 	                    'div',
 	                    null,
-	                    _react2.default.createElement(_SelectedProblems2.default, { selected: this.props.selectedProblems }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'search-btn', onClick: this._searchRecommend },
-	                        ' Go '
-	                    )
+	                    _react2.default.createElement(_SelectedProblems2.default, { selected: this.props.selectedProblems })
 	                ) : ""
 	            )
 	        );
@@ -31642,11 +31651,6 @@
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'search-container' },
-	            _react2.default.createElement(
-	                'h2',
-	                null,
-	                'apnaVaidya'
-	            ),
 	            _react2.default.createElement('input', { type: 'text', value: this.props.searchTerm, placeholder: 'Search', onChange: this.props.onChange }),
 	            this.props.searchResults.length ? _react2.default.createElement(
 	                'div',
@@ -32146,6 +32150,18 @@
 
 	var _reactRouter = __webpack_require__(51);
 
+	var _SearchContainer = __webpack_require__(284);
+
+	var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
+
+	var _SelectedProblems = __webpack_require__(286);
+
+	var _SelectedProblems2 = _interopRequireDefault(_SelectedProblems);
+
+	var _SearchActions = __webpack_require__(272);
+
+	var _SearchActions2 = _interopRequireDefault(_SearchActions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var RecommendationHeader = _react2.default.createClass({
@@ -32155,44 +32171,49 @@
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
-	            { className: 'header' },
+	            null,
+	            _react2.default.createElement(_SearchContainer2.default, { searchTerm: this.props.searchTerm, searchResults: this.props.searchResults, onChange: this._searchQuery }),
 	            _react2.default.createElement(
-	                'ul',
-	                { className: 'tabs' },
+	                'div',
+	                { className: 'header' },
 	                _react2.default.createElement(
-	                    'li',
-	                    null,
+	                    'ul',
+	                    { className: 'tabs' },
 	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/recommend', activeClassName: 'active', onlyActiveOnIndex: true },
-	                        ' Yoga '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'li',
-	                    null,
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/recommend', activeClassName: 'active', onlyActiveOnIndex: true },
+	                            ' Yoga '
+	                        )
+	                    ),
 	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/recommend/food', activeClassName: 'active' },
-	                        ' Food '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'li',
-	                    null,
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/recommend/food', activeClassName: 'active' },
+	                            ' Food '
+	                        )
+	                    ),
 	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/recommend/remedies', activeClassName: 'active' },
-	                        ' Remedies '
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'li',
-	                    null,
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/recommend/remedies', activeClassName: 'active' },
+	                            ' Remedies '
+	                        )
+	                    ),
 	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/recommend/doctors', activeClassName: 'active' },
-	                        ' Doctors '
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/recommend/doctors', activeClassName: 'active' },
+	                            ' Doctors '
+	                        )
 	                    )
 	                )
 	            )
@@ -32457,15 +32478,7 @@
 	                            'li',
 	                            { 'data-tag': i, onClick: onClick },
 	                            ob.solution,
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'details' },
-	                                ob.duration,
-	                                'minutes for ',
-	                                ob.days,
-	                                ' days '
-	                            )
+	                            ' '
 	                        ),
 	                        _react2.default.createElement(_SolutionDescription2.default, { 'data-tag': i, isActive: _this.state.currentlyActive == i,
 	                            content: ob })
@@ -32541,15 +32554,7 @@
 	                            'li',
 	                            { 'data-tag': i, onClick: onClick },
 	                            ob.solution,
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'details' },
-	                                ob.duration,
-	                                'minutes for ',
-	                                ob.days,
-	                                ' days '
-	                            )
+	                            ' '
 	                        ),
 	                        _react2.default.createElement(_SolutionDescription2.default, { 'data-tag': i, isActive: _this.state.currentlyActive == i,
 	                            content: ob })
@@ -32625,15 +32630,7 @@
 	                            'li',
 	                            { 'data-tag': i, onClick: onClick },
 	                            ob.solution,
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'details' },
-	                                ob.duration,
-	                                'minutes for ',
-	                                ob.days,
-	                                ' days '
-	                            )
+	                            ' '
 	                        ),
 	                        _react2.default.createElement(_SolutionDescription2.default, { 'data-tag': i, isActive: _this.state.currentlyActive == i,
 	                            content: ob })

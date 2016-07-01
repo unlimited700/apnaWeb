@@ -4,13 +4,14 @@ var BUILD_DIR = path.resolve(__dirname, 'build/');
 var APP_DIR = path.resolve(__dirname, 'src/');
 
 var config = {
-  entry: ['whatwg-fetch',
+  entry: [
+      'whatwg-fetch',
       'webpack-hot-middleware/client',
       path.join(__dirname, '/src/index.js')],
   output: {
         path: path.join(__dirname, '/build/'),
-        filename: '/bundle.js',
-        publicPath: '/'
+        filename: 'bundle.js',
+        publicPath: '/build/'
   },
   module : {
     loaders : [
@@ -30,8 +31,20 @@ var config = {
     ]
   },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+
     ]
 };
-
+/*
+ new webpack.DefinePlugin({
+ 'process.env': {
+ 'NODE_ENV': JSON.stringify('production')
+ }
+ }),
+ new webpack.optimize.UglifyJsPlugin({
+ compress: {
+ warnings: false
+ }
+ })
+ */
 module.exports = config;

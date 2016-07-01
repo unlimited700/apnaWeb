@@ -5,9 +5,16 @@ import SearchActions from '../../actions/search/SearchActions';
 import {withRouter} from 'react-router';
 
 var MainSection = React.createClass({
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.selectedProblems.length) {
+            this.props.router.push('/recommend');
+        }
+    },
     render: function() {
         return(
             <div>
+                <br />
+                <center><h2>apnaVaidya</h2></center>
                 <SearchContainer searchTerm={this.props.searchTerm} searchResults={this.props.searchResults} onChange={ this._searchQuery } onAdd/>
                 <br />
                 <br />
@@ -16,8 +23,6 @@ var MainSection = React.createClass({
                         this.props.selectedProblems.length ? (
                             <div>
                                 <SelectedProblems selected={this.props.selectedProblems}/>
-                                <br />
-                                <button className="search-btn" onClick={ this._searchRecommend }> Go </button >
                             </div>
                         ): ""
                     }

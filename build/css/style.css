@@ -1,10 +1,10 @@
 @import 'https://fonts.googleapis.com/css?family=Prompt';
 body {
     margin: 0;
-    color: #cccccc;
+    color: #8a908e;
     font-family: 'Prompt', sans-serif;
     width: 100%;
-    background-color: #564756;
+    background-color: #e2e2e2;
 }
 a {
     text-decoration: none;
@@ -29,10 +29,11 @@ a {
     transition-duration: 150ms;
 }
 .navbar-nav li:hover {
-    background-color: #564756;
+    background-color: #e2e2e2;
 }
 .navbar-nav .active {
-    background-color: #564756;
+    background-color: #e2e2e2;
+    color: rgba(0, 0, 0, 0.45);
 }
 
 .navbar-nav li a {
@@ -40,6 +41,9 @@ a {
     color: #e2e2e2;
     padding: 5px 15px;
 
+}
+.navbar-nav li a:hover {
+    color: rgba(0, 0, 0, 0.45);
 }
 .navbar-nav .welcome-li {
     position: absolute;
@@ -57,7 +61,7 @@ a {
     margin-top: 7%;
     width: 260px;
     text-align: center;
-    background-color: #564756;
+    background-color: #e2e2e2;
 }
 .selected {
     text-align: center;
@@ -86,7 +90,7 @@ a {
     transition-duration: 150ms;
 }
 .selected ul li:hover {
-    box-shadow: inset 0px 0px 5px #564756;
+    box-shadow: inset 0px 0px 5px #e2e2e2;
 //background-color: #ccc;
 }
 .selected ul li:after {
@@ -262,7 +266,7 @@ button:hover {
     color: white;
 }
 .recommend-container .header .tabs .active {
-    background-color: #2e2e2e;
+    background-color: #8a908e;
 }
 .recommend-container .header .tabs li {
     display: inline-block;
@@ -270,7 +274,7 @@ button:hover {
     width: 25%;
     text-align: center;
     cursor: pointer;
-    background-color: #676262;
+    background-color: #d0cece;
     transition: all 150ms;
 }
 .recommend-container .header .tabs li:hover {
@@ -285,10 +289,12 @@ button:hover {
     padding: 0px;
 }
 .recommend-container .content .solution-container li {
-    background-color: #2e2e2e;
+    background-color: #8a908e;
+    color: white;
     padding: 5px 20px;
     cursor: pointer;
     z-index: 1;
+    transition: all 150ms;
 }
 .recommend-container .content .solution-container li:hover {
     background-color: #7b827f;
@@ -298,7 +304,7 @@ button:hover {
 }
 .solution-container .content {
     display: none;
-    background-color: #676262;
+    background-color: #d0cece;
 }
 .solution-container p {
     padding: 0;
@@ -350,7 +356,7 @@ button:hover {
     margin-top: 5%;
     width: 360px;
     text-align: center;
-    background-color: #564756;
+    background-color: #e2e2e2;
 }
 .problem-container textarea {
     min-height: 150px;

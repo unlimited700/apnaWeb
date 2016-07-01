@@ -23,8 +23,7 @@ var DoctorsComponent = React.createClass({
                         var onClick = this.onClick.bind(this, i);
                         return (
                             <div key={i}>
-                                <li data-tag={i} onClick={onClick}>{ob.solution} <p className="details">{ob.duration}
-                                    minutes for {ob.days} days </p></li>
+                                <li data-tag={i} onClick={onClick}>{ob.solution} </li>
                                 <SolutionDescription data-tag={i} isActive={this.state.currentlyActive == i}
                                                      content={ob}/>
                             </div>

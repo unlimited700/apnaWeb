@@ -7,7 +7,7 @@ var SearchContainer = React.createClass({
     render: function() {
         return (
             <div className="search-container">
-                <h2>apnaVaidya</h2>
+                
                 <input type="text" value={this.props.searchTerm} placeholder="Search" onChange={ this.props.onChange }/>
 
                 {

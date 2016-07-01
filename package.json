@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "webpack-dev-server --inline --content-base --hot ."
+    "compile": "NODE_ENV=production webpack -p"
   },
   "author": "",
   "license": "BSD-2-Clause",

@@ -12,7 +12,7 @@ var Header = React.createClass({
                             {this.props.isLoggedIn ? (<Link to="/logout">Logout</Link>) : <Link to="/login" activeClassName="active">Login</Link>}
                         </li>
                         <li>
-                            {this.props.isLoggedIn ? (<Link to="/dash">Dashboard</Link>) : ""}
+                            {this.props.isLoggedIn ? (<Link to="/dash" activeClassName="active">Dashboard</Link>) : ""}
                         </li>
                         { this.props.isLoggedIn ? ( <li className="welcome-li">Welcome {this.props.user.name}</li>): ( <li><Link to="/signup" activeClassName="active">Signup</Link></li>)}
                     </ul>
