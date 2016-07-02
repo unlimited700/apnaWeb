@@ -10,13 +10,29 @@ class SearchStore {
         this.selectedProblems = [];
         this.searchResults = [];
         this.searchTerm = "";
+        this.mapping = {
+            status: "",
+            problem :{
+                searchTerm: "",
+                searchResults: []
+            },
+            solution: {
+                searchTerm: "",
+                searchResults: []
+            },
+            selectedSolution: [],
+            selectedProblem: [],
+            allProblems: [],
+            allSolutions: []
+        };
+
         this.recommendation = [];
         this.isRecommendationLoading = true;
         var object = this;
 
         APIService.getProblems(data => {
+            this.mapping.allProblems = data.problems;
             this.setState({allProblems: data.problems});
-            this.handleSearch();
         });
 
         this.bindListeners({
@@ -24,6 +40,14 @@ class SearchStore {
             handleDelete: SearchActions.DELETE, 
             handleSearch: SearchActions.SEARCH,
             handleRecommend: SearchActions.RECOMMEND,
+            handleMappingProblemSearch: SearchActions.MAPPING_PROBLEM_SEARCH,
+            handleMappingProblemAdd: SearchActions.MAPPING_PROBLEM_ADD,
+            handleMappingProblemDelete: SearchActions.MAPPING_PROBLEM_DELETE,
+            handleMappingSolutionSearch: SearchActions.MAPPING_SOLUTION_SEARCH,
+            handleMappingSolutionAdd: SearchActions.MAPPING_SOLUTION_ADD,
+            handleMappingSolutionDelete: SearchActions.MAPPING_SOLUTION_DELETE,
+            handleMapping: SearchActions.MAP_PROBLEM_SOLUTION,
+            updateSolutions: SearchActions.UPDATE_SOLUTIONS
         });
     }
 
@@ -91,6 +115,116 @@ class SearchStore {
     }
 
 
+    /**
+     * Mapping functions
+     */
+
+    handleMappingProblemSearch(text) {
+        this.mapping.problem.searchResults = [];
+        this.mapping.problem.searchTerm = text;
+        if(!text) {
+            return;
+        }
+        var pattern = new RegExp("^"+text, 'g');
+
+        for( var problem in this.mapping.allProblems) {
+            if(this.mapping.allProblems[problem].toLowerCase().match(pattern)) {
+                this.mapping.problem.searchResults.push(this.mapping.allProblems[problem])
+            }
+        }
+        for( var problem in this.mapping.allProblems) {
+            if(!(this.mapping.problem.searchResults.indexOf(this.allProblems[problem]) > -1 ) && this.mapping.allProblems[problem].toLowerCase().match(text) )
+                this.mapping.problem.searchResults.push(this.mapping.allProblems[problem]);
+        }
+    }
+
+    handleMappingSolutionSearch(text) {
+        console.log(text);
+        this.mapping.solution.searchResults = [];
+        this.mapping.solution.searchTerm = text;
+        if(!text) {
+            return;
+        }
+        var pattern = new RegExp("^"+text, 'g');
+
+        for( var solution in this.mapping.allSolutions) {
+            if(this.mapping.allSolutions[solution].toLowerCase().match(pattern)) {
+                this.mapping.solution.searchResults.push(this.mapping.allSolutions[solution])
+            }
+        }
+        for( var solution in this.mapping.allSolutions) {
+            if(!(this.mapping.solution.searchResults.indexOf(this.mapping.allSolutions[solution]) > -1 ) && this.mapping.allSolutions[solution].toLowerCase().match(text) )
+                this.mapping.solution.searchResults.push(this.mapping.allSolutions[solution]);
+        }
+
+    }
+
+    handleMappingProblemAdd(text) {
+        var added = this.mapping.allProblems.splice(this.mapping.allProblems.indexOf(text), 1)[0];
+        if(added) {
+            this.mapping.selectedProblem = [added];
+        }
+        this.mapping.problem.searchTerm = "";
+        this.mapping.problem.searchResults = [];
+        return true;
+    }
+    handleMappingSolutionAdd(text) {
+        var added = this.mapping.allSolutions.splice(this.mapping.allSolutions.indexOf(text), 1)[0];
+        if(added) {
+            this.mapping.selectedSolution = [added];
+        }
+        this.mapping.solution.searchTerm = "";
+        this.mapping.solution.searchResults = [];
+        return true;
+    }
+    handleMappingProblemDelete() {
+        this.mapping.allProblems.push(this.mapping.selectedProblem[0]);
+        this.mapping.selectedProblem = [];
+    }
+    handleMappingSolutionDelete() {
+        this.mapping.allSolutions.push(this.mapping.selectedSolution[0]);
+        this.mapping.selectedSolution = [];
+    }
+
+    handleMapping() {
+        if(this.mapping.selectedProblem.length && this.mapping.selectedSolution.length) {
+            this.mapping.status = "Adding ...";
+
+            var data = {
+                solution: {
+                    problem: this.mapping.selectedProblem[0],
+                    solution: this.mapping.selectedSolution[0],
+                    rating: 1,
+                    doseId: 1,
+                },
+                uid: localStorage.getItem('uid'),
+                authtoken: localStorage.getItem('token')
+            }
+            APIService.mapProblemSolution(data, response => {
+                var message = "";
+                if(response.responseCode == 200) {
+                    message = "Added successfully.";
+                }
+                else {
+                    message = "Something went wrong, please try again.";
+                }
+
+                this.mapping.status = message;
+            });
+
+        }
+    }
+    
+    updateSolutions() {
+        if(localStorage.getItem('uid')) {
+            APIService.getSolutions({
+                uid: localStorage.getItem('uid'),
+                authtoken: localStorage.getItem('token')
+            }, data => {
+                this.mapping.allSolutions = data.solutions;
+            })
+        }
+    }
 
 }
 

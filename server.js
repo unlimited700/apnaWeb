@@ -43,6 +43,6 @@ app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
-app.listen(port, function() {
+app.listen(port, "0.0.0.0", function() {
     console.log("Server listening on ", port);
 });

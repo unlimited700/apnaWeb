@@ -17,6 +17,8 @@ import DoctorsRecommendComponent from './components/recommendation/Doctors.react
 import DashboardLandingComponent from './components/dashboard/Landing.react';
 import DashboardAddProblem from './components/dashboard/AddProblem.react';
 import DashboardAddSolution from './components/dashboard/AddSolution.react';
+import DashboardMapProblemSolution from './components/dashboard/MapProblemSolution.react';
+
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route path='/' component= {MasterPage}>
@@ -34,6 +36,7 @@ ReactDOM.render(
                 <IndexRoute component={DashboardLandingComponent} />
                 <Route path="/dash/add-problem" component={DashboardAddProblem} />
                 <Route path="/dash/add-solution" component={DashboardAddSolution} />
+                <Route path="/dash/map-problem-solution" component={DashboardMapProblemSolution} />
             </Route>
         </Route>
     </Router>,

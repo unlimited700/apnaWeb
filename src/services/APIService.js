@@ -5,11 +5,11 @@ var apiHome = '/api/v1';
 
 var endpoints = {
     getProblems: apiHome + '/problems',
+    getSolutions: apiHome + '/solutions',
     login: apiHome + '/login',
     signup: apiHome + '/signup',
     setSolution: apiHome + '/solution',
-    mapSymptom: apiHome + '/problem-symptom-mapping',
-    uploadProblemSolution: apiHome + '/upload-problem-solution',
+    mapProblemSolution: apiHome + '/upload-problem-solution',
     setProblem: apiHome + '/problem',
     recommend: apiHome + '/recommend',
 }
@@ -48,6 +48,18 @@ var APIService = {
         }).then(FilterResponse).then(cb);
     },
 
+    getSolutions: function(data, cb) {
+
+        fetch(endpoints.getSolutions, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            }
+        }).then(FilterResponse).then(cb);
+    },
+
     login: function(data, cb) {
 
         fetch(endpoints.login, {
@@ -56,6 +68,22 @@ var APIService = {
             body: JSON.stringify({
                 userName: data.user,
                 password: data.pass
+            })
+        }).then(FilterResponse).then(cb);
+    },
+
+    mapProblemSolution(data, cb) {
+
+        fetch(endpoints.mapProblemSolution, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                auth: defaultHeaders.authtoken,
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                problemSolutionDose: [data.solution]
             })
         }).then(FilterResponse).then(cb);
     },

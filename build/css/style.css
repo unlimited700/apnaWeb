@@ -59,7 +59,7 @@ a {
 .search-container {
     margin: 0 auto;
     margin-top: 5%;
-    width: 260px;
+    width: 250px;
     text-align: center;
     background-color: #e2e2e2;
 }
@@ -105,7 +105,7 @@ a {
 }
 
 .search-container input{
-    width: 260px;
+    width: 250px;
     display: inline-block;
     padding: 15px 0 15px 20px;
     font-size: 16px;
@@ -138,7 +138,7 @@ a {
 }
 
 .search-results {
-    width: 260px;
+    width: 250px;
     margin: 0 auto;
     position: absolute;
     z-index: 9;
@@ -148,6 +148,7 @@ a {
 .search-results ul {
     max-height:176px;
     overflow-y: scroll;
+    overflow-x: hidden;
     list-style: none;
     padding-left: 0px;
 }
@@ -327,7 +328,7 @@ button:hover {
 */
 
 .green-btn {
-    width: 260px;
+    width: 250px;
     padding: 7px 40px;
     cursor: pointer;
     background-color: #0b825f;
@@ -360,4 +361,24 @@ button:hover {
 }
 .problem-container textarea {
     min-height: 150px;
+}
+
+
+.mapping-container {
+    width: 530px;
+    margin: 0 auto;
+}
+.mapping-container input {
+    width: 250px !important;
+    display: inline-block !important;
+}
+.mapping-left {
+    float: left;
+    width:50%;
+    display: inline-block;
+}
+.mapping-right {
+    display: inline-block;
+    float: right;
+    width: 50%;
 }

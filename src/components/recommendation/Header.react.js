@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import SearchActions from '../../actions/search/SearchActions';
 import SearchContainer from '../search/SearchContainer.react';
 import SelectedProblems from '../search/SelectedProblems.react';
 
@@ -9,7 +10,7 @@ var RecommendationHeader = React.createClass({
     render: function () {   
         return (
             <div>
-                <SearchContainer searchTerm={this.props.Search.searchTerm} searchResults={this.props.Search.searchResults}/>
+                <SearchContainer searchTerm={this.props.Search.searchTerm} searchResults={this.props.Search.searchResults} placeHolder="Search" onChange={this.onChange} onAdd={this.onAdd}/>
                 <div className="selected">
                     {
                         this.props.Search.selectedProblems.length ? (
@@ -29,6 +30,13 @@ var RecommendationHeader = React.createClass({
                 </div>
             </div>
         )
+    },
+    onChange(event) {
+        SearchActions.search(event.target.value);
+    },
+    onAdd: function(index) {
+        SearchActions.add(index);
+        SearchActions.recommend();
     }
     
 });

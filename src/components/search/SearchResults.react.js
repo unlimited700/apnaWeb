@@ -20,8 +20,7 @@ var SearchResults = React.createClass({
     },
 
     onAdd: function(index) {
-        SearchActions.add(index);
-        SearchActions.recommend();
+        this.props.onAdd(index);
     }
 });
 

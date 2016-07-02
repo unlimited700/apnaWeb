@@ -7,8 +7,7 @@ var LandingComponent = React.createClass({
             <div className="form-container">
                 <Link to="/dash/add-problem"><button>Add New Problem</button></Link><br />
                 <Link to="/dash/add-solution"><button>Add New Solution</button></Link><br />
-                <button>Map New Problem Solution</button>
-
+                <Link to="/dash/map-problem-solution"><button>Map New Problem Solution</button></Link>
             </div>
         );
     }

@@ -32,7 +32,6 @@ var AddProblem = React.createClass({
         UserActions.addProblem( prob, type);
 
         event.target.children[0].value = "";
-        event
     }
 });
 

@@ -19,6 +19,35 @@ class SearchActions {
         return true;
     }
 
+    mappingProblemSearch(text) {
+        return text;
+    }
+    mappingProblemAdd(text) {
+        return text;
+    }
+    mappingProblemDelete(index) {
+        return index;
+    }
+
+
+    mappingSolutionSearch(text) {
+        return text;
+    }
+    mappingSolutionAdd(text) {
+        return text;
+    }
+    mappingSolutionDelete(index) {
+        return index;
+    }
+
+    mapProblemSolution() {
+        return true;
+    }
+
+    updateSolutions() {
+        return true;
+    }
+
 }
 
 module.exports = alt.createActions(SearchActions);

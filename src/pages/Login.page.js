@@ -1,6 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import UserActions from '../actions/user/UserActions';
+import SearchActions from '../actions/search/SearchActions';
+
+
 var LoginPage = React.createClass({
 
     componentWillReceiveProps(nextProps) {
@@ -31,6 +34,7 @@ var LoginPage = React.createClass({
         UserActions.login(user, pass);
         event.target.children[1].value = "";
         event.target.children[3].value = "";
+        SearchActions.updateSolutions();
     }
 });
 
