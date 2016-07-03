@@ -2,13 +2,14 @@ import alt from '../../alt';
 import APIService from '../../services/APIService';
 
 var SearchActions = require('../../actions/search/SearchActions');
-
+var UserActions = require('../../actions/user/UserActions');
 
 class SearchStore {
 
     constructor() {
         this.selectedProblems = [];
         this.searchResults = [];
+        this.searchInitialized = false;
         this.searchTerm = "";
         this.mappingStatus = "";
         this.mapping = {
@@ -61,11 +62,26 @@ class SearchStore {
             handleMappingSolutionAdd: SearchActions.MAPPING_SOLUTION_ADD,
             handleMappingSolutionDelete: SearchActions.MAPPING_SOLUTION_DELETE,
             handleMapping: SearchActions.MAP_PROBLEM_SOLUTION,
-            updateSolutions: SearchActions.UPDATE_SOLUTIONS
+            updateSolutions: SearchActions.UPDATE_SOLUTIONS,
+            clearData: UserActions.LOGOUT,
+            clearData: UserActions.LOGIN
         });
     }
+    _clearSearch() {
+        for (i in this.selectedProblems.length) {
+            allProblems.push(this.selectedProblems[i]);
+        }
+        this.searchTerm = "";
+        this.selectedProblems = [];
+    }
 
-
+    clearData() {
+        this._clearSearch();
+        this.mappingStatus = "";
+        this.searchResults = [];
+        this.recommendation = [];
+        this.searchInitialized = false;
+    }
 
     handleAdd(text) {
         var added = this.allProblems.splice(this.allProblems.indexOf(text), 1)[0];
@@ -74,6 +90,7 @@ class SearchStore {
         }
         this.searchTerm = "";
         this.searchResults = [];
+        this.searchInitialized = true;
         return true;
     }
 
@@ -82,6 +99,8 @@ class SearchStore {
         if(deleted) {
             this.allProblems.push(deleted);
         }
+        if(!this.selectedProblems.length)
+            this.searchInitialized = false;
         return true;
     }
 

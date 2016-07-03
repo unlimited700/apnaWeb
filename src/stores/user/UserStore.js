@@ -139,17 +139,28 @@ class UserStore {
 
     handleSignup(data) {
         var error = "";
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!data.name) {
             error = "Please enter a valid name";
         }
-        else if(!data.email) {
+        else if(data.phone.length != 10) {
+            error = "Phone number must be of 10 digits";
+
+        }
+        else if(!data.email || !re.test(data.email)) {
             error = "Please enter a valid email address";
         }
         else if(!data.password) {
             error = "Please enter a password";
         }
-        else if(!data.age) {
-            error = "Please specify your age";
+        else if(!data.confirmPassword) {
+            error = "Please confirm the password";
+        }
+        else if(data.password !== data.confirmPassword) {
+            error = "Passwords didn't match";
+        }
+        else if(!data.age || parseInt(data.age) > 100 || parseInt(data.age) < 0) {
+            error = "Please enter correct age";
         }
         else if(!data.male && !data.female) {
             error = "Please choose a gender";

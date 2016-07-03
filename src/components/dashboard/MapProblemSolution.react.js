@@ -44,7 +44,7 @@ var AddProblem = React.createClass({
                         <form onSubmit={this.mapProblemSolution}>
                             <div>
                                 <select>
-                                    <option>Duration</option>
+                                    <option>Duration(mins.)</option>
                                     {this.props.Search.mapping.mappingDuration.map(function(duration, index) {
                                         return (<option key={index}>{duration}</option>);
                                     })};
@@ -57,7 +57,7 @@ var AddProblem = React.createClass({
                                 </select>
 
                                 <select>
-                                    <option>Frequency</option>
+                                    <option>Dose</option>
                                     {this.props.Search.mapping.mappingFrequency.map(function(freq, index) {
                                         return (<option key={index}>{freq}</option>);
                                     })};

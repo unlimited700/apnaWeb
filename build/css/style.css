@@ -1,10 +1,10 @@
 @import 'https://fonts.googleapis.com/css?family=Prompt';
 body {
     margin: 0;
-    color: #8a908e;
+    color: #353535;
     font-family: 'Prompt', sans-serif;
     width: 100%;
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
 }
 a {
     text-decoration: none;
@@ -29,16 +29,16 @@ a {
     transition-duration: 150ms;
 }
 .navbar-nav li:hover {
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
 }
 .navbar-nav .active {
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
     color: rgba(0, 0, 0, 0.45);
 }
 
 .navbar-nav li a {
     display: block;
-    color: #e2e2e2;
+    color: #f5f5f5;
     padding: 5px 15px;
 
 }
@@ -61,7 +61,7 @@ a {
     margin-top: 5%;
     width: 250px;
     text-align: center;
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
 }
 .selected {
     text-align: center;
@@ -90,8 +90,8 @@ a {
     transition-duration: 150ms;
 }
 .selected ul li:hover {
-    box-shadow: inset 0px 0px 5px #e2e2e2;
-//background-color: #ccc;
+    box-shadow: inset 0px 0px 5px #f5f5f5;
+//background-color: #ececec;
 }
 .selected ul li:after {
     content: "x";
@@ -112,29 +112,26 @@ a {
     font-family: Montserrat, sans-serif;
     border: 0 none;
     z-index: 10;
-    color: white;
+    color: #9a9999;
     outline: none;
-    background: #8a908e;
+    background: white;
     box-sizing: border-box;
     transition: all 0.15s;
 }
 ::-webkit-input-placeholder { /* WebKit browsers */
-    color: white;
+    color: #c7c7c7;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: white;
+    color: #c7c7c7;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: white;
+    color: #c7c7c7;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: white;
+    color: #c7c7c7;
 }
 #search_text:focus {
     background: rgb(64, 151, 119);
-}
-.search-container input:hover {
-    background: #7b827f;
 }
 
 .search-results {
@@ -153,21 +150,21 @@ a {
     padding-left: 0px;
 }
 .search-results ul li {
-    background-color: #ccc;
+    background-color: #ececec;
     cursor: pointer;
     padding: 10px;
     transition: all;
     transition-duration: 100ms;
 }
 .search-results ul li:hover {
-    background-color: #bfbfbf;
+    background-color: #dadada;
 }
 
 .search-btn {
     width: 200px;
     padding: 7px 40px;
     cursor: pointer;
-    background-color: #0b825f;
+    background-color: #2464af;
     color: white;
     outline: none;
     border-color: white;
@@ -196,7 +193,7 @@ a {
     text-align: center;
 }
 .signup-container {
-    min-width:300px;
+    min-width:320px;
 }
 .signup-form {
     text-align: center;
@@ -207,11 +204,11 @@ a {
     padding: 10px 0 10px 15px;
     font-size: 16px;
     font-family: Montserrat, sans-serif;
-    color: white;
+    color: #9a9999;
     outline: none;
     border: 2px solid transparent;
     border-radius: 1px;
-    background: #8a908e;
+    background: white;
     box-sizing: border-box;
     transition: all 0.20s;
     margin: 4px;
@@ -229,7 +226,7 @@ a {
     width: 230px;
     padding: 7px 40px;
     cursor: pointer;
-    background-color: #0b825f;
+    background-color: #2464af;
     color: white;
     outline: none;
     border-color: white;
@@ -238,6 +235,15 @@ a {
     border-radius:2px;
     transition: all;
     transition-duration: 150ms;
+}
+
+.form-container .left {
+    width: 49%;
+    float: left;
+}
+.form-container .right {
+    width: 49%;
+    float: right;
 }
 button:hover {
     background-color: white;
@@ -331,7 +337,7 @@ button:hover {
     width: 250px;
     padding: 7px 40px;
     cursor: pointer;
-    background-color: #0b825f;
+    background-color: #2464af;
     color: white;
     outline: none;
     border-color: white;
@@ -357,7 +363,7 @@ button:hover {
     margin-top: 5%;
     width: 360px;
     text-align: center;
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
 }
 .problem-container textarea {
     min-height: 150px;

@@ -20,14 +20,19 @@ var RecommendationHeader = React.createClass({
                         ): ""
                     }
                 </div>
-                <div className="header">
-                    <ul className="tabs">
-                        <li><Link to="/recommend"  activeClassName="active" onlyActiveOnIndex={true}> Yoga </Link></li>
-                        <li><Link to="/recommend/food"  activeClassName="active"> Food </Link></li>
-                        <li><Link to="/recommend/remedies" activeClassName="active"> Remedies </Link></li>
-                        <li><Link to="/recommend/doctors" activeClassName="active"> Doctors </Link></li>
-                    </ul>
-                </div>
+                {
+                    this.props.Search.selectedProblems.length ? (
+                    <div className="header">
+                        <ul className="tabs">
+                            <li><Link to="/recommend" activeClassName="active" onlyActiveOnIndex={true}> Yoga </Link>
+                            </li>
+                            <li><Link to="/recommend/food" activeClassName="active"> Food </Link></li>
+                            <li><Link to="/recommend/remedies" activeClassName="active"> Remedies </Link></li>
+                            <li><Link to="/recommend/doctors" activeClassName="active"> Doctors </Link></li>
+                        </ul>
+                    </div>
+                    ): ""
+                }
             </div>
         )
     },

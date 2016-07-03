@@ -8,6 +8,8 @@ var YogaComponent = React.createClass({
         }
     },
     render: function () {
+        if(!this.props.Search.searchInitialized)
+            return (<div></div>);
         if(this.props.Search.isRecommendationLoading) {
             return (<center>Loading...</center>);
         }
@@ -24,7 +26,7 @@ var YogaComponent = React.createClass({
                         return (
                             <div key={i}>
                                 <li data-tag={i} onClick={onClick}>{ob.solution} <p className="details">{ob.duration}
-                                    minutes for {ob.days} days </p></li>
+                                     minutes for {ob.days} days </p></li>
                                 <SolutionDescription data-tag={i} isActive={this.state.currentlyActive == i}
                                                      content={ob}/>
                             </div>

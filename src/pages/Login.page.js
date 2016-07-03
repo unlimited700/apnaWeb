@@ -14,13 +14,13 @@ var LoginPage = React.createClass({
     render() {
         return (
             <div className="search-container">
-                <center><h3>Login</h3></center>
+                <center><h3>Signin</h3></center>
                 <form className="form-container login-form" onSubmit={ this._login }>
                     <p>{this.props.User.loginError}</p>
                     <input type="email" placeholder="Email"/><br />
                     <input type="password" placeholder="Password"/><br /><br />
 
-                    <button>Login</button>
+                    <button>Signin</button>
                 </form>
 
             </div>

@@ -7,9 +7,9 @@ var Header = React.createClass({
             <nav >
                 <div className="container">
                     <ul className="nav navbar-nav">
-                        <li><Link to="/" activeClassName="active" onlyActiveOnIndex={true}>Search</Link></li>
+                        <li><Link to="/recommend" activeClassName="active">Search</Link></li>
                         <li>
-                            {this.props.User.isLoggedIn ? (<Link to="/logout">Logout</Link>) : <Link to="/login" activeClassName="active">Login</Link>}
+                            {this.props.User.isLoggedIn ? (<Link to="/logout">Logout</Link>) : <Link to="/login" activeClassName="active">Signin</Link>}
                         </li>
                         <li>
                             {this.props.User.isLoggedIn ? (<Link to="/dash" activeClassName="active">Dashboard</Link>) : ""}

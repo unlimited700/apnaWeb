@@ -11,7 +11,12 @@ var SignupPage = React.createClass({
                     <input type="text" placeholder="Name"/>
                     <input type="text" placeholder="example@example.com"/><br />
                     <input type="number" placeholder="Phone"/>
-                    <input type="password" placeholder="Password"/><br />
+                    <div className="left">
+                        <input type="password" placeholder="Password"/><br />
+                    </div>
+                    <div className="right">
+                        <input type="password" placeholder="Confirm Password"/>
+                    </div>
                     <input type="number" placeholder="Age"/>
                     <div className="inline" >
                         <input type="radio" name="gender" value="Male" /> Male
@@ -31,7 +36,8 @@ var SignupPage = React.createClass({
             name: input[1].value,
             email: input[2].value,
             phone: input[4].value,
-            password: input[5].value,
+            password: input[5].children[0].value,
+            confirmPassword: input[6].children[0].value,
             age: input[7].value,
             male: input[8].children[0].checked,
             female: input[8].children[1].checked,

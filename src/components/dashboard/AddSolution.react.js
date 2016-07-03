@@ -19,7 +19,6 @@ var AddSolution = React.createClass({
                             <option value="YOGA">YOGA </option>
                             <option value="FOOD">FOOD </option>
                             <option value="REMEDIES">REMEDIES </option>
-                            <option value="DOCTORS">DOCTORS</option>
                         </select>
                     </div><br />
                     <button type="submit" className="green-btn">Add</button>
