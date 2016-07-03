@@ -40,8 +40,8 @@ class SearchActions {
         return index;
     }
 
-    mapProblemSolution() {
-        return true;
+    mapProblemSolution(data) {
+        return data;
     }
 
     updateSolutions() {

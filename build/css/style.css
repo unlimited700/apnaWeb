@@ -372,6 +372,9 @@ button:hover {
     width: 250px !important;
     display: inline-block !important;
 }
+.mapping-container select {
+    padding: 5px;
+}
 .mapping-left {
     float: left;
     width:50%;

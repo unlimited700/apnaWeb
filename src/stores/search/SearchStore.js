@@ -10,8 +10,8 @@ class SearchStore {
         this.selectedProblems = [];
         this.searchResults = [];
         this.searchTerm = "";
+        this.mappingStatus = "";
         this.mapping = {
-            status: "",
             problem :{
                 searchTerm: "",
                 searchResults: []
@@ -23,7 +23,21 @@ class SearchStore {
             selectedSolution: [],
             selectedProblem: [],
             allProblems: [],
-            allSolutions: []
+            allSolutions: [],
+            // Static data for calculating index for mapping problem
+            mappingDuration: [2,5,10,15,20,30,45,60,90,120],
+            mappingDays: [1,2,5,10,15,20,30,45,60],
+            mappingFrequency: [1,2,3,4,5,10,20],
+            calculateIndex: (duration, days, frequency) => {
+                var durationIndex = this.mapping.mappingDuration.indexOf(duration);
+                var daysIndex = this.mapping.mappingDays.indexOf(days);
+                var frequencyIndex = this.mapping.mappingFrequency.indexOf(frequency);
+                if(durationIndex == -1 || daysIndex == -1 || frequencyIndex == -1)
+                    return -1;
+                return durationIndex * this.mapping.mappingDays.length * this.mapping.mappingFrequency.length +
+                    daysIndex * this.mapping.mappingFrequency.length +
+                    frequencyIndex + 1;
+            }
         };
 
         this.recommendation = [];
@@ -139,7 +153,6 @@ class SearchStore {
     }
 
     handleMappingSolutionSearch(text) {
-        console.log(text);
         this.mapping.solution.searchResults = [];
         this.mapping.solution.searchTerm = text;
         if(!text) {
@@ -186,16 +199,28 @@ class SearchStore {
         this.mapping.selectedSolution = [];
     }
 
-    handleMapping() {
+    handleMapping(data) {
+        /**
+         * @param data
+         *  Contains (Duration or Frequency) and Days
+         */
+        if(!parseInt(data.frequency || !parseInt(data.duration) || !parseInt(data.days))) {
+            this.setState({mappingStatus: "Please select frequency, duration and days."});
+            return;
+        }
         if(this.mapping.selectedProblem.length && this.mapping.selectedSolution.length) {
-            this.mapping.status = "Adding ...";
-
+            this.setState({mappingStatus: "Mapping ..."});
+            var index = this.mapping.calculateIndex(data.duration, data.days, data.frequency);
+            if(index == -1) {
+                this.setState({mappingStatus: "Invalid choice, please try again."});
+                return ;
+            }
             var data = {
                 solution: {
                     problem: this.mapping.selectedProblem[0],
                     solution: this.mapping.selectedSolution[0],
                     rating: 1,
-                    doseId: 1,
+                    doseId: index
                 },
                 uid: localStorage.getItem('uid'),
                 authtoken: localStorage.getItem('token')
@@ -208,10 +233,10 @@ class SearchStore {
                 else {
                     message = "Something went wrong, please try again.";
                 }
-
-                this.mapping.status = message;
+                this.mapping.selectedProblem = [];
+                this.mapping.selectedSolution = [];
+                this.setState({mappingStatus: message});
             });
-
         }
     }
     

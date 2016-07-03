@@ -15,7 +15,7 @@ var RecommendationHeader = React.createClass({
                     {
                         this.props.Search.selectedProblems.length ? (
                             <div>
-                                <SelectedProblems selected={this.props.Search.selectedProblems}/>
+                                <SelectedProblems selected={this.props.Search.selectedProblems} onDelete={ this.onDelete }/>
                             </div>
                         ): ""
                     }
@@ -36,6 +36,10 @@ var RecommendationHeader = React.createClass({
     },
     onAdd: function(index) {
         SearchActions.add(index);
+        SearchActions.recommend();
+    },
+    onDelete: function (index) {
+        SearchActions.delete(index);
         SearchActions.recommend();
     }
     

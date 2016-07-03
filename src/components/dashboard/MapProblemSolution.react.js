@@ -12,7 +12,7 @@ var AddProblem = React.createClass({
         return (
             <div className="mapping-container">
                 <h3>Map problem to solution</h3>
-                <p>{this.props.Search.mapping.status}</p>
+                <p>{this.props.Search.mappingStatus}</p>
                 <div className="mapping-left">
                     <SearchContainer searchTerm={this.props.Search.mapping.problem.searchTerm} searchResults={this.props.Search.mapping.problem.searchResults} placeHolder="Search Problem" onChange={this.onProblemChange} onAdd={this.onProblemAdd} disabled={this.props.Search.mapping.selectedProblem.length}/>
                     <div className="selected">
@@ -37,15 +37,42 @@ var AddProblem = React.createClass({
                         }
                     </div>
                 </div>
-                { this.props.Search.mapping.selectedProblem.length && this.props.Search.mapping.selectedSolution.length ? (
-                    <div>
-                        <br />
-                        <br />
-                        <hr />
-                            <button type="submit" className="green-btn" onClick={this.mapProblemSolution}>Add</button>
-                    </div>
-                ) : ""}
+                <br /><br /><br />
 
+
+                    { this.props.Search.mapping.selectedProblem.length && this.props.Search.mapping.selectedSolution.length ? (
+                        <form onSubmit={this.mapProblemSolution}>
+                            <div>
+                                <select>
+                                    <option>Duration</option>
+                                    {this.props.Search.mapping.mappingDuration.map(function(duration, index) {
+                                        return (<option key={index}>{duration}</option>);
+                                    })};
+                                </select>
+                                <select>
+                                    <option>Days</option>
+                                    {this.props.Search.mapping.mappingDays.map(function(days, index) {
+                                        return (<option key={index}>{days}</option>);
+                                    })};
+                                </select>
+
+                                <select>
+                                    <option>Frequency</option>
+                                    {this.props.Search.mapping.mappingFrequency.map(function(freq, index) {
+                                        return (<option key={index}>{freq}</option>);
+                                    })};
+                                </select>
+
+                            </div>
+
+                            <div>
+                                <br />
+                                <hr />
+                                <button type="submit" className="green-btn">Add</button>
+                            </div>
+                        </form>
+
+                    ) : ""}
 
             </div>
         );
@@ -68,8 +95,17 @@ var AddProblem = React.createClass({
     onSolutionDelete(index) {
         SearchActions.mappingSolutionDelete(index);
     },
-    mapProblemSolution() {
-        SearchActions.mapProblemSolution();
+    mapProblemSolution(event) {
+        event.preventDefault()
+        var selects = event.target.children[0];
+        var duration = parseInt(selects.children[0].value);
+        var days = parseInt(selects.children[1].value);
+        var freq = parseInt(selects.children[2].value);
+        SearchActions.mapProblemSolution({
+            duration: duration,
+            frequency: freq,
+            days: days
+        });
     }
 
 
