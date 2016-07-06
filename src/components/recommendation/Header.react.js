@@ -10,6 +10,11 @@ var RecommendationHeader = React.createClass({
     render: function () {   
         return (
             <div>
+                <br />
+                {!this.props.Search.selectedProblems.length? (
+                    <center><h3>apnaVaidya</h3></center>
+                ): ""}
+
                 <SearchContainer searchTerm={this.props.Search.searchTerm} searchResults={this.props.Search.searchResults} placeHolder="Search" onChange={this.onChange} onAdd={this.onAdd}/>
                 <div className="selected">
                     {

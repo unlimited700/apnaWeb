@@ -9,18 +9,18 @@ var SearchPage = React.createClass({
 
     render: function () {
         return (
-
-            <div className="recommend-container">
-                <AltContainer stores={{ Search: SearchStore}}>
-                    <Header />
-                </AltContainer>
-                <div className="content">
-                    <AltContainer stores={{ Search: SearchStore, User: UserStore}}>
-                        { this.props.children }
+                <div className="recommend-container">
+                    <AltContainer stores={{ Search: SearchStore}}>
+                        <Header />
                     </AltContainer>
+
+                    <div className="content">
+                        <AltContainer stores={{ Search: SearchStore, User: UserStore}}>
+                            { this.props.children }
+                        </AltContainer>
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
         )
     }
 

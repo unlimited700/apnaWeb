@@ -37,7 +37,7 @@ var APIService = {
 
     },
 
-    getRecommendations: function(data, cb) {
+    getRecommendations: function(data, cb, err) {
         
         fetch(endpoints.recommend, {
             method: 'POST',
@@ -45,7 +45,7 @@ var APIService = {
             body: JSON.stringify({
                 problems: data
             })
-        }).then(FilterResponse).then(cb);
+        }).then(FilterResponse).then(cb).catch(err);
     },
 
     getSolutions: function(data, cb) {

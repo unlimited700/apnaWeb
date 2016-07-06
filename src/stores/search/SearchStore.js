@@ -41,7 +41,7 @@ class SearchStore {
             }
         };
 
-        this.recommendation = [];
+        this.recommendation = {recommendedDoctors: [], recommendedFood: [], recommendedYoga: [], recommendedRemedies:[]};
         this.isRecommendationLoading = true;
         var object = this;
 
@@ -73,6 +73,15 @@ class SearchStore {
         }
         this.searchTerm = "";
         this.selectedProblems = [];
+    }
+    _clearRecommendationResults() {
+        this.recommendation = {
+            recommendedYoga: [],
+            recommendedDoctors: [],
+            recommendedFood: [],
+            recommendedRemedies: []
+        }
+
     }
 
     clearData() {
@@ -112,17 +121,18 @@ class SearchStore {
                     isRecommendationLoading: false,
                     recommendation: response
                 });
+            }, error => {
+                this._clearRecommendationResults();
+                this.setState( {
+                    isRecommendationLoading: false
+                });
+
             })
         }
         else {
+            this._clearRecommendationResults();
             this.setState({
-                isRecommendationLoading: false,
-                recommendation: {
-                    recommendedYoga: [],
-                    recommendedFood: [],
-                    recommendedRemedies: [],
-                    recommendedDoctors: []
-                }
+                isRecommendationLoading: false
             })
         }
     }
@@ -252,6 +262,8 @@ class SearchStore {
                 else {
                     message = "Something went wrong, please try again.";
                 }
+                this.mapping.allSolutions.push(this.mapping.selectedSolution[0]);
+                this.mapping.allProblems.push(this.mapping.selectedProblem[0]);
                 this.mapping.selectedProblem = [];
                 this.mapping.selectedSolution = [];
                 this.setState({mappingStatus: message});

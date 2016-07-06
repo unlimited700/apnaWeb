@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import UserActions from '../actions/user/UserActions';
 import SearchActions from '../actions/search/SearchActions';
+import { VelocityComponent } from 'velocity-react';
 
 
 var LoginPage = React.createClass({
@@ -13,6 +14,7 @@ var LoginPage = React.createClass({
     },
     render() {
         return (
+            <VelocityComponent animation={{ opacity: 1 }} duration={2000}>
             <div className="search-container">
                 <center><h3>Signin</h3></center>
                 <form className="form-container login-form" onSubmit={ this._login }>
@@ -24,6 +26,7 @@ var LoginPage = React.createClass({
                 </form>
 
             </div>
+            </VelocityComponent>
         );
     },
 
