@@ -1,6 +1,10 @@
 import FilterResponse from '../utilities/FilterResponse';
 import Constants from '../constants/Constants';
 import 'whatwg-fetch';
+
+import NProgress from 'nprogress';
+NProgress.configure({ showSpinner: false });
+
 var apiHome = '/api/v1';
 
 var endpoints = {
@@ -30,6 +34,7 @@ var publicHeaders = {
 var APIService = {
 
     getProblems: function(cb) {
+        NProgress.start();
         fetch(endpoints.getProblems, {
             method: 'GET',
             headers: publicHeaders
@@ -38,7 +43,7 @@ var APIService = {
     },
 
     getRecommendations: function(data, cb, err) {
-        
+        NProgress.start();
         fetch(endpoints.recommend, {
             method: 'POST',
             headers: publicHeaders,
@@ -49,7 +54,7 @@ var APIService = {
     },
 
     getSolutions: function(data, cb) {
-
+        NProgress.start();
         fetch(endpoints.getSolutions, {
             method: 'GET',
             headers: {
@@ -61,7 +66,7 @@ var APIService = {
     },
 
     login: function(data, cb) {
-
+        NProgress.start();
         fetch(endpoints.login, {
             method: 'POST',
             headers: defaultHeaders,
@@ -73,7 +78,7 @@ var APIService = {
     },
 
     mapProblemSolution(data, cb) {
-
+        NProgress.start();
         fetch(endpoints.mapProblemSolution, {
             method: 'POST',
             headers: {
@@ -87,9 +92,8 @@ var APIService = {
             })
         }).then(FilterResponse).then(cb);
     },
-
     setProblems: function (data, cb) {
-
+        NProgress.start();
         fetch(endpoints.setProblem, {
             method: 'POST',
             headers: {
@@ -106,7 +110,7 @@ var APIService = {
     },
 
     setSolution(data, cb) {
-
+        NProgress.start();
         fetch(endpoints.setSolution, {
             method: 'POST',
             headers: {
@@ -122,7 +126,7 @@ var APIService = {
     },
 
     signup: function(data, cb) {
-
+        NProgress.start();
         fetch(endpoints.signup, {
             method: 'POST',
             headers: defaultHeaders,
