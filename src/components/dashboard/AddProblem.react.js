@@ -7,7 +7,7 @@ var AddProblem = React.createClass({
         return (
             <div className="search-container">
                 <h3>Add problem</h3>
-                <p>{this.props.addedProblemStatus}</p>
+                <p>{this.props.User.addedProblemStatus}</p>
                 <form onSubmit={this.addProblem} className="form-container">
                     <input type="text" placeholder="Problem"/><br /><br />
                     <div>

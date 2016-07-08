@@ -11,6 +11,7 @@ class UserStore {
         this.signupError = "";
         this.isRecommendationLoading = false;
         this.addedProblemStatus = "";
+        this.addedSolutionStatus = "";
         this.recommendedYoga = [];
         this.isLoggedIn = false;
         if(localStorage.email) {
@@ -79,7 +80,7 @@ class UserStore {
                 message = "Successfully added.";
             }
             else {
-                message = "Something went wrong, please tryy again.";
+                message = "Something went wrong, please try again.";
             }
 
             this.setState({addedSolutionStatus: message});

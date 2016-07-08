@@ -2,7 +2,7 @@ import alt from '../../alt';
 
 class SearchActions {
     search(text) {
-        return text;
+        return text.toLowerCase();
     }
 
     delete(index) {
@@ -20,7 +20,7 @@ class SearchActions {
     }
 
     mappingProblemSearch(text) {
-        return text;
+        return text.toLowerCase();
     }
     mappingProblemAdd(text) {
         return text;
@@ -31,7 +31,7 @@ class SearchActions {
 
 
     mappingSolutionSearch(text) {
-        return text;
+        return text.toLowerCase();
     }
     mappingSolutionAdd(text) {
         return text;

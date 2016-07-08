@@ -7,7 +7,7 @@ var AddSolution = React.createClass({
         return (
             <div className="problem-container">
                 <h3>Add solution</h3>
-                <p>{this.props.addedSolutionStatus}</p>
+                <p>{this.props.User.addedSolutionStatus}</p>
                 <form onSubmit={this.addSolution} className="form-container">
                     <input type="text" placeholder="Solution Title"/>
                     <textarea placeholder="Describe the solution here..."></textarea>
