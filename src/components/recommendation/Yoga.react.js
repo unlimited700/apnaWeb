@@ -17,7 +17,6 @@ var YogaComponent = React.createClass({
             return (<center>Sorry, No results found.</center>);
         }
         else {
-
             return (
 
                 <ul className="solution-container" onClick={this.onClick}>

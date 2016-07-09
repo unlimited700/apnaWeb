@@ -120,7 +120,7 @@ class SearchStore {
                 this.setState({
                     isRecommendationLoading: false,
                     recommendation: response
-                });
+                })
             }, error => {
                 this._clearRecommendationResults();
                 this.setState( {
