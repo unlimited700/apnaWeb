@@ -391,3 +391,17 @@ button:hover {
     float: right;
     width: 50%;
 }
+
+@media only screen and (max-width: 540px) {
+    .mapping-left {
+        width: 100%;
+    }
+    .mapping-right {
+        width: 100%;
+    }
+    .mapping-container {
+        width: 100%;
+    }
+}
+
+

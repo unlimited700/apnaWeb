@@ -18,6 +18,8 @@ var YogaComponent = React.createClass({
         }
         else {
             return (
+// TODO 
+
 
                 <ul className="solution-container" onClick={this.onClick}>
                     { this.props.Search.recommendation.recommendedYoga.map((ob, i) => {
