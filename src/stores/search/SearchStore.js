@@ -233,15 +233,17 @@ class SearchStore {
          * @param data
          *  Contains (Duration or Frequency) and Days
          */
+        var obj = this;
         if(!parseInt(data.frequency || !parseInt(data.duration) || !parseInt(data.days))) {
-            this.setState({mappingStatus: "Please select frequency, duration and days."});
+            obj.setState({mappingStatus: "Please select frequency, duration and days."});
             return;
         }
-        if(this.mapping.selectedProblem.length && this.mapping.selectedSolution.length) {
-            this.setState({mappingStatus: "Mapping ..."});
-            var index = this.mapping.calculateIndex(data.duration, data.days, data.frequency);
+        if(obj.mapping.selectedProblem.length && obj.mapping.selectedSolution.length) {
+
+            obj.setState({mappingStatus: "Mapping ..."});
+            var index = obj.mapping.calculateIndex(data.duration, data.days, data.frequency);
             if(index == -1) {
-                this.setState({mappingStatus: "Invalid choice, please try again."});
+                obj.setState({mappingStatus: "Invalid choice, please try again."});
                 return ;
             }
             var data = {
@@ -256,17 +258,22 @@ class SearchStore {
             }
             APIService.mapProblemSolution(data, response => {
                 var message = "";
+
                 if(response.responseCode == 200) {
                     message = "Added successfully.";
                 }
                 else {
                     message = "Something went wrong, please try again.";
                 }
-                this.mapping.allSolutions.push(this.mapping.selectedSolution[0]);
-                this.mapping.allProblems.push(this.mapping.selectedProblem[0]);
-                this.mapping.selectedProblem = [];
-                this.mapping.selectedSolution = [];
-                this.setState({mappingStatus: message});
+                obj.mapping.allSolutions.push(obj.mapping.selectedSolution[0]);
+                obj.mapping.allProblems.push(obj.mapping.selectedProblem[0]);
+                obj.mapping.selectedProblem = [];
+                obj.mapping.selectedSolution = [];
+                obj.setState({mappingStatus: message});
+
+                setTimeout(function() {
+                    obj.setState({mappingStatus: ""});
+                }, 2000);
             });
         }
     }

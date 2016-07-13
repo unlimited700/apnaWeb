@@ -36,18 +36,19 @@ class UserStore {
     }
 
     handleAddProblem(data) {
+        var obj = this;
         if(data.problem === "" || data.probType === "") {
             this.setState({addedProblemStatus: "Please give some info to add."});
             return ;
         }
 
-        this.setState({addedProblemStatus: "Processing ..."});
+        obj.setState({addedProblemStatus: "Processing ..."});
 
         APIService.setProblems({
             problems: [data],
             uid: this.user.uid,
             authtoken: this.user.token
-        }, function(response) {
+        }, response => {
             var message = "";
             if(response.responseCode == 200) {
                 message = "Successfully added.";
@@ -56,18 +57,22 @@ class UserStore {
                 message = "Something went wrong, please try again.";
             }
 
-            this.setState({addedProblemStatus: message});
+            obj.setState({addedProblemStatus: message});
+            setTimeout(function() {
+                obj.setState({addedProblemStatus: ""});
+            }, 2000);
         });
 
     }
 
     handleAddSolution(data) {
+        var obj = this;
         if(data.solution === "" || data.step === "") {
-            this.setState({addedSolutionStatus: "Please enter all solution details."})
+            obj.setState({addedSolutionStatus: "Please enter all solution details."})
             return ;
         }
         else {
-            this.setState({addedSolutionStatus: "Processing..."});
+            obj.setState({addedSolutionStatus: "Processing..."});
         }
 
         APIService.setSolution({
@@ -83,17 +88,20 @@ class UserStore {
                 message = "Something went wrong, please try again.";
             }
 
-            this.setState({addedSolutionStatus: message});
+            obj.setState({addedSolutionStatus: message});
+            setTimeout(function() {
+                obj.setStatus({addedSolutionStauts: ""});
+            }, 2000);
         });
 
     }
 
     handleLogin(data) {
+        var obj = this;
         if(!(data.user || !data.pass)) {
-            this.setState({loginError: "Please enter both email and password"})
+            obj.setState({loginError: "Please enter both email and password"})
             return ;
         }
-        var obj = this;
         APIService.login(data, function(data){
             if(!data) {
                 obj.setState( {
@@ -122,6 +130,10 @@ class UserStore {
                     }
                 })
             }
+
+            setTimeout(function() {
+               obj.setState({loginError: ""});
+            });
         })
     }
 
@@ -139,6 +151,7 @@ class UserStore {
 
 
     handleSignup(data) {
+        var obj = this;
         var error = "";
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!data.name) {
@@ -167,17 +180,20 @@ class UserStore {
             error = "Please choose a gender";
         }
         if(error) {
-            this.setState({signupError: error});
+            obj.setState({signupError: error});
         }
         else {
             data.sex = data.male ? "Male" : "Female";
             APIService.signup(data, response => {
                 if(response.responseCode == 200) {
-                    this.setState({signupError: "Successfully signed up, you can now login."});
+                    obj.setState({signupError: "Successfully signed up, you can now login."});
                 }
                 else {
-                    this.setState({signupError: response.message});
+                    obj.setState({signupError: response.message});
                 }
+                setTimeout(function() {
+                    obj.setState({signupError: ""});
+                }, 2000);
             });
         }
 

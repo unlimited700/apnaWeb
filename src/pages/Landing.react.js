@@ -6,7 +6,7 @@ var LandingPage = React.createClass({
 
     render() {
         return (
-            <ReactRedirect location="/recommend"></ReactRedirect>
+            <ReactRedirect location="/#/recommend"></ReactRedirect>
         );
     }
 });
