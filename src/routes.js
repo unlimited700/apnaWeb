@@ -7,6 +7,7 @@ import SearchApp from './components/search/SearchApp.react';
 import LoginPage from './pages/Login.page';
 import SignupPage from './pages/Signup.page';
 import LogoutPage from './pages/Logout.page';
+import VerifyPage from './pages/Verify.react';
 import YogaRecommendComponent from './components/recommendation/Yoga.react';
 import FoodRecommendComponent from './components/recommendation/Food.react';
 import RemediesRecommendComponent from './components/recommendation/Remedies.react';
@@ -30,6 +31,7 @@ module.exports =
         <Route path="/login" component={LoginPage} />
         <Route path="/logout" component={LogoutPage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/verify" component={VerifyPage} />
         <Route path="/dash" component={DashboardPage}>
             <IndexRoute component={DashboardLandingComponent} />
             <Route path="/dash/add-problem" component={DashboardAddProblem} />

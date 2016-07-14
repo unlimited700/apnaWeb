@@ -1,7 +1,7 @@
 import React from 'react';
 import alt from '../../alt';
 import UserActions from '../../actions/user/UserActions';
-import SearchActions from '../../actions/search/SearchActions';
+import EmailUtility from '../../utilities/Email';
 import APIService from '../../services/APIService';
 
 class UserStore {
@@ -13,6 +13,7 @@ class UserStore {
         this.addedProblemStatus = "";
         this.addedSolutionStatus = "";
         this.recommendedYoga = [];
+        this.verifiedStatus = "";
         this.isLoggedIn = false;
         if(localStorage.email) {
             this.isLoggedIn = true;
@@ -31,7 +32,8 @@ class UserStore {
             handleLogout: UserActions.LOGOUT,
             handleSignup: UserActions.SIGNUP,
             handleAddProblem: UserActions.ADD_PROBLEM,
-            handleAddSolution: UserActions.ADD_SOLUTION
+            handleAddSolution: UserActions.ADD_SOLUTION,
+            handleVerify: UserActions.VERIFY
         })
     }
 
@@ -108,7 +110,7 @@ class UserStore {
                    loginError: "Something went wrong, please try again"
                 });
             }
-            else if(data.responseCode != 200) {
+            else if(data.responseCode !== 200) {
                 obj.setState({
                     loginError: "Invalid email or password"
                 });
@@ -133,7 +135,7 @@ class UserStore {
 
             setTimeout(function() {
                obj.setState({loginError: ""});
-            });
+            }, 2000);
         })
     }
 
@@ -153,7 +155,6 @@ class UserStore {
     handleSignup(data) {
         var obj = this;
         var error = "";
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!data.name) {
             error = "Please enter a valid name";
         }
@@ -161,7 +162,7 @@ class UserStore {
             error = "Phone number must be of 10 digits";
 
         }
-        else if(!data.email || !re.test(data.email)) {
+        else if(!data.email || !EmailUtility.checkEmail(data.email)) {
             error = "Please enter a valid email address";
         }
         else if(!data.password) {
@@ -186,7 +187,7 @@ class UserStore {
             data.sex = data.male ? "Male" : "Female";
             APIService.signup(data, response => {
                 if(response.responseCode == 200) {
-                    obj.setState({signupError: "Successfully signed up, you can now login."});
+                    obj.setState({signupError: "Successfully signed up, please check your inbox."});
                 }
                 else {
                     obj.setState({signupError: response.message});
@@ -198,6 +199,27 @@ class UserStore {
         }
 
 
+    }
+
+    handleVerify(data) {
+        var obj = this;
+        obj.verifiedStatus = "Hold on ...";
+
+        if(!EmailUtility.checkEmail(data.email)) {
+            obj.verifiedStatus = "Invalid email or token.";
+        }
+        APIService.verify(data, response => {
+
+            var message = "";
+            if(response.responseCode == 200) {
+                message = "Verified successfully, you can now login.";
+            }
+            else {
+                message = response.message;
+            }
+            obj.setState({verifiedStatus: message});
+
+        });
     }
 
 

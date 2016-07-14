@@ -16,6 +16,7 @@ var endpoints = {
     mapProblemSolution: apiHome + '/upload-problem-solution',
     setProblem: apiHome + '/problem',
     recommend: apiHome + '/recommend',
+    verify: apiHome + '/verify'
 }
 
 
@@ -133,6 +134,15 @@ var APIService = {
             body: JSON.stringify(data)
         }).then(FilterResponse).then(cb);
     },
+
+    verify: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.verify, {
+            method: 'POST',
+            headers: publicHeaders,
+            body: JSON.stringify(data),
+        }).then(FilterResponse).then(cb);
+    }
 };
 
 module.exports = APIService;

@@ -26,7 +26,9 @@ class UserActions {
         return 1;
     }
     
-    
+    verify(data) {
+        return data;
+    }
 }
 
 module.exports = alt.createActions(UserActions);
