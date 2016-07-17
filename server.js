@@ -35,7 +35,7 @@ app.use(WebpackHotMiddlware(compiler, {
 
 app.use('/api', function(req, res) {
     console.log("request coming: " + req.url);
-    var url = "http://localhost:3007" + req.url;
+    var url = "http://api.apnavaidya.com" + req.url;
     req.pipe(request(url)).pipe(res);
 });
 
