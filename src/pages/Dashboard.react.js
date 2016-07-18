@@ -5,6 +5,11 @@ import UserStore from '../stores/user/UserStore';
 import SearchStore from '../stores/search/SearchStore';
 
 var DashboardPage = React.createClass({
+    componentWillMount: function () {
+        if(!this.props.User.user.uid) {
+            this.props.router.push('/login');
+        }
+    },
     render: function () {
         return (
             <div className="dash-container">

@@ -17,10 +17,6 @@ class UserActions {
     signup(data) {
         return data;
     }
-    
-    isAuthenticated() {
-        
-    }
 
     logout() {
         return 1;
@@ -29,6 +25,40 @@ class UserActions {
     verify(data) {
         return data;
     }
+    updateUnverifiedSolutions() {
+        return true;
+    }
+    updateUnverifiedProblems() {
+        return true;
+    }
+    updateUnverifiedMappings() {
+        return true;
+    }
+
+
+    deleteProblem(index) {
+        return index;
+    }
+    approveProblem(index) {
+        return index;
+    }
+
+
+    deleteSolution(index) {
+        return index;
+    }
+    approveSolution(index) {
+        return index;
+    }
+
+
+    deleteMapping(index) {
+        return index;
+    }
+    approveMapping(index) {
+        return index;
+    }
+    
 }
 
 module.exports = alt.createActions(UserActions);
