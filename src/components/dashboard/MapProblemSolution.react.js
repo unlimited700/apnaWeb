@@ -26,7 +26,7 @@ var AddProblem = React.createClass({
                     </div>
                 </div>
                 <div className="mapping-right">
-                    <SearchContainer searchTerm={this.props.Search.mapping.solution.searchTerm} searchResults={this.props.Search.mapping.solution.searchResults} placeHolder="Search Solution" onChange={this.onSolutionChange} onAdd={this.onSolutionAdd} disabled={this.props.Search.mapping.selectedSolution.length}/>
+                    <SearchContainer searchTerm={this.props.Search.mapping.solution.searchTerm} searchResults={this.props.Search.mapping.solution.searchResults} placeHolder="Search Solution" onChange={this.onSolutionChange} onAdd={this.onSolutionAdd} disabled={false}/>
                     <div className="selected">
                         {
                             this.props.Search.mapping.selectedSolution.length ? (
@@ -41,7 +41,7 @@ var AddProblem = React.createClass({
 
 
                     { this.props.Search.mapping.selectedProblem.length && this.props.Search.mapping.selectedSolution.length ? (
-                        <form onSubmit={this.mapProblemSolution}>
+                        <form onSubmit={this.mapProblemSolution} className="clear">
                             <div>
                                 <select>
                                     <option>Duration(mins.)</option>

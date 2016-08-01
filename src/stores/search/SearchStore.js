@@ -52,7 +52,7 @@ class SearchStore {
 
         this.bindListeners({
             handleAdd: SearchActions.ADD,
-            handleDelete: SearchActions.DELETE, 
+            handleDelete: SearchActions.DELETE,
             handleSearch: SearchActions.SEARCH,
             handleRecommend: SearchActions.RECOMMEND,
             handleMappingProblemSearch: SearchActions.MAPPING_PROBLEM_SEARCH,
@@ -213,7 +213,7 @@ class SearchStore {
     handleMappingSolutionAdd(text) {
         var added = this.mapping.allSolutions.splice(this.mapping.allSolutions.indexOf(text), 1)[0];
         if(added) {
-            this.mapping.selectedSolution = [added];
+            this.mapping.selectedSolution.push(added);
         }
         this.mapping.solution.searchTerm = "";
         this.mapping.solution.searchResults = [];
@@ -223,9 +223,9 @@ class SearchStore {
         this.mapping.allProblems.push(this.mapping.selectedProblem[0]);
         this.mapping.selectedProblem = [];
     }
-    handleMappingSolutionDelete() {
-        this.mapping.allSolutions.push(this.mapping.selectedSolution[0]);
-        this.mapping.selectedSolution = [];
+    handleMappingSolutionDelete(index) {
+        var toDelete = this.mapping.selectedSolutions.splice(index);
+        this.mapping.allSolutions.push(toDelete);
     }
 
     handleMapping(data) {
@@ -241,18 +241,25 @@ class SearchStore {
         if(obj.mapping.selectedProblem.length && obj.mapping.selectedSolution.length) {
 
             obj.setState({mappingStatus: "Mapping ..."});
-            var index = obj.mapping.calculateIndex(data.duration, data.days, data.frequency);
-            if(index == -1) {
+            var doseIndex = obj.mapping.calculateIndex(data.duration, data.days, data.frequency);
+            if(doseIndex == -1) {
                 obj.setState({mappingStatus: "Invalid choice, please try again."});
                 return ;
             }
+            var postData = [];
+            this.mapping.selectedProblem.map(problem => {
+                this.mapping.selectedSolution.map(solution => {
+                    postData.push({
+                        problem: problem,
+                        solution: solution,
+                        rating: 1,
+                        doseId: doseIndex
+                    })
+                })
+            })
+
             var data = {
-                solution: {
-                    problem: this.mapping.selectedProblem[0],
-                    solution: this.mapping.selectedSolution[0],
-                    rating: 1,
-                    doseId: index
-                },
+                solution: postData,
                 uid: localStorage.getItem('uid'),
                 authtoken: localStorage.getItem('token')
             }
@@ -265,11 +272,14 @@ class SearchStore {
                 else {
                     message = "Something went wrong, please try again.";
                 }
-                obj.mapping.allSolutions.push(obj.mapping.selectedSolution[0]);
+                for(var i in obj.mapping.selectedSolution)
+                    obj.mapping.allSolutions.push(obj.mapping.selectedSolution[i]);
                 obj.mapping.allProblems.push(obj.mapping.selectedProblem[0]);
                 obj.mapping.selectedProblem = [];
                 obj.mapping.selectedSolution = [];
                 obj.setState({mappingStatus: message});
+
+
 
                 setTimeout(function() {
                     obj.setState({mappingStatus: ""});
@@ -277,7 +287,7 @@ class SearchStore {
             });
         }
     }
-    
+
     updateSolutions() {
         if(localStorage.getItem('uid')) {
             APIService.getSolutions({

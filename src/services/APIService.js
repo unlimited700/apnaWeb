@@ -133,7 +133,7 @@ var APIService = {
                 authtoken: data.authtoken
             },
             body: JSON.stringify({
-                problemSolutionDose: [data.solution]
+                problemSolutionDose: data.solution
             })
         }).then(FilterResponse).then(cb);
     },
@@ -187,7 +187,7 @@ var APIService = {
             body: JSON.stringify(data),
         }).then(FilterResponse).then(cb);
     },
-    
+
     deleteProblem: function (data, cb) {
         NProgress.start();
         fetch(endpoints.deleteProblems, {
@@ -291,5 +291,3 @@ var APIService = {
 };
 
 module.exports = APIService;
-
-

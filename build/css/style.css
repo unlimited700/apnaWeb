@@ -11,6 +11,9 @@ a {
     color: black;
     display: block;
 }
+.clear {
+    clear: both;
+}
 main {
     width: 95%;
     max-width: 1000px;
@@ -85,6 +88,7 @@ main.loaded {
     right: 20px;
     margin-top: 15px;
     cursor: auto;
+    color: aliceblue;
 }
 .navbar-nav .welcome-li:hover {
 
@@ -497,4 +501,8 @@ button:hover {
     }
 }
 
-
+@media only screen and (max-width: 630px) {
+    .welcome-li {
+        display: none !important;
+    }
+}
