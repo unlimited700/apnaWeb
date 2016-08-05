@@ -8,6 +8,9 @@ var UnverifiedSolutions = React.createClass({
         UserActions.updateUnverifiedSolutions();
     },
     render: function() {
+        if(!this.props.User.unverifiedSolutions.length )
+            return (<p>No pending solutions found.</p>);
+
         return (
             <div className="admin">
                 <h2>Unverified solutions: </h2>

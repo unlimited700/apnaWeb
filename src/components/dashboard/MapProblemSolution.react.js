@@ -3,7 +3,7 @@ import SelectedProblems from '../search/SelectedProblems.react';
 import SearchActions from '../../actions/search/SearchActions';
 import SearchContainer from '../search/SearchContainer.react';
 
-var AddProblem = React.createClass({
+var MapProblemSolution = React.createClass({
     componentWillMount() {
         SearchActions.updateSolutions();
     },
@@ -64,7 +64,9 @@ var AddProblem = React.createClass({
                                 </select>
 
                             </div>
-
+                            <div className="form-container">
+                                <input type="text" placeholder="Promo link (if any)" />
+                            </div>
                             <div>
                                 <br />
                                 <hr />
@@ -98,13 +100,15 @@ var AddProblem = React.createClass({
     mapProblemSolution(event) {
         event.preventDefault()
         var selects = event.target.children[0];
+        var promoLink = event.target.children[1].children[0].value;
         var duration = parseInt(selects.children[0].value);
         var days = parseInt(selects.children[1].value);
         var freq = parseInt(selects.children[2].value);
         SearchActions.mapProblemSolution({
             duration: duration,
             frequency: freq,
-            days: days
+            days: days,
+            promoLink: promoLink
         });
     }
 
@@ -113,4 +117,4 @@ var AddProblem = React.createClass({
 
 });
 
-module.exports = AddProblem;
+module.exports = MapProblemSolution;

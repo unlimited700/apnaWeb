@@ -253,10 +253,13 @@ class SearchStore {
                         problem: problem,
                         solution: solution,
                         rating: 1,
-                        doseId: doseIndex
+                        doseId: doseIndex,
+                        promoLink: data.promoLink,
                     })
                 })
             })
+
+            console.log(postData);
 
             var data = {
                 solution: postData,
@@ -278,8 +281,6 @@ class SearchStore {
                 obj.mapping.selectedProblem = [];
                 obj.mapping.selectedSolution = [];
                 obj.setState({mappingStatus: message});
-
-
 
                 setTimeout(function() {
                     obj.setState({mappingStatus: ""});

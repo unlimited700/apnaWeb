@@ -5,9 +5,12 @@ import ProblemsWithOptions from './ProblemsWithOptions.react';
 
 var UnverifiedProblems = React.createClass({
     componentWillMount: function() {
-        UserActions.updateUnverifiedProblems();  
+        UserActions.updateUnverifiedProblems();
     },
     render: function() {
+        if(!this.props.User.unverifiedProblems.length )
+            return (<p>No pending problems found.</p>);
+
         return (
             <div className="admin">
                 <h2>Unverified problems: </h2>

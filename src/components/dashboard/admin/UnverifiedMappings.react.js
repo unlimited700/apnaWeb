@@ -13,6 +13,9 @@ var UnverifiedMappings = React.createClass({
         UserActions.updateUnverifiedMappings();
     },
     render: function() {
+        if(!this.props.User.unverifiedMappings.length )
+            return (<p>No pending mappings found.</p>);
+
         return (
             <div className="adm recommend-container">
                 <h2>Unverified mappings: </h2>
