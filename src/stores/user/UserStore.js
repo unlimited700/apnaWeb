@@ -9,19 +9,31 @@ class UserStore {
     constructor() {
         this.loginError = "";
         this.signupError = "";
+        this.statusMessage = "";
         this.isRecommendationLoading = false;
+        this.unverifiedProblems = [];
+        this.unverifiedSolutions = [];
+        this.unverifiedMappings = [];
         this.addedProblemStatus = "";
         this.addedSolutionStatus = "";
         this.recommendedYoga = [];
         this.verifiedStatus = "";
         this.isLoggedIn = false;
+        this.isAdmin = function() {
+            return this.user.role == "ADMIN"
+        };
+        this.isModerator = function() {
+            return this.user.role == "MODERATOR"
+        };
+
         if(localStorage.email) {
             this.isLoggedIn = true;
             this.user = {
                 email: localStorage.email,
                 token: localStorage.token,
                 name: localStorage.name,
-                uid: localStorage.uid
+                uid: localStorage.uid,
+                role: localStorage.role,
             }
         }
         else {
@@ -33,7 +45,17 @@ class UserStore {
             handleSignup: UserActions.SIGNUP,
             handleAddProblem: UserActions.ADD_PROBLEM,
             handleAddSolution: UserActions.ADD_SOLUTION,
-            handleVerify: UserActions.VERIFY
+            handleVerify: UserActions.VERIFY,
+
+            updateUnverifiedSolutions: UserActions.updateUnverifiedSolutions,
+            updateUnverifiedProblems: UserActions.updateUnverifiedProblems,
+            updateUnverifiedMappings: UserActions.updateUnverifiedMappings,
+            deleteProblem: UserActions.deleteProblem,
+            approveProblem: UserActions.approveProblem,
+            deleteSolution: UserActions.deleteSolution,
+            approveSolution: UserActions.approveSolution,
+            deleteMapping: UserActions.deleteMapping,
+            approveMapping: UserActions.approveMapping,
         })
     }
 
@@ -120,15 +142,17 @@ class UserStore {
                 localStorage.token = data.token;
                 localStorage.uid = data.userId;
                 localStorage.email = data.userName;
-
+                localStorage.role = data.role;
+                // TODO Add role to user object
                 obj.setState({
-                    loginError: "Successfully Loggged in",
+                    loginError: "Successfully logged in",
                     isLoggedIn: true,
                     user: {
                         name: data.name,
                         email: data.userName,
                         token: data.token,
-                        uid: data.userId
+                        uid: data.userId,
+                        role: data.role,
                     }
                 })
             }
@@ -219,6 +243,139 @@ class UserStore {
             }
             obj.setState({verifiedStatus: message});
 
+        });
+    }
+
+    updateUnverifiedProblems() {
+        var obj = this;
+        APIService.getInactiveProblems({uid: obj.user.uid, authtoken: obj.user.token}, function(response) {
+            if(response.responseCode == 200) {
+                obj.setState({unverifiedProblems: response.problems});
+            }
+
+        });
+    }
+    updateUnverifiedSolutions() {
+        var obj = this;
+
+        APIService.getInactiveSolutions({uid: obj.user.uid, authtoken: obj.user.token}, response=> {
+            if(response.responseCode == 200) {
+                obj.setState({unverifiedSolutions: response.solutions});
+            }
+        });
+    }
+
+    updateUnverifiedMappings() {
+        var obj = this;
+
+        APIService.getInactiveMappings({uid: obj.user.uid, authtoken: obj.user.token}, response=> {
+            if(response.responseCode == 200) {
+                obj.setState({unverifiedMappings: response.recommendations});
+            }
+        })
+    }
+
+    deleteProblem(index) {
+        var obj = this;
+        var data = {uid: obj.user.uid, authtoken: obj.user.token, problem: obj.unverifiedProblems[index]};
+        obj.setState({statusMessage: "Deleting problem..."});
+        APIService.deleteProblem(data, response =>{
+            if(response.responseCode == 200) {
+                obj.unverifiedProblems.splice(index, 1);
+                obj.setState({statusMessage: "Deleted"});
+            }
+
+            setTimeout(function() {
+                obj.setState({statusMessage: ""})
+            }, 2000);
+        });
+    }
+    
+    approveProblem(index) {
+        var obj = this;
+        var data = {uid: obj.user.uid, authtoken: obj.user.token, problem: obj.unverifiedProblems[index]};
+        obj.statusMessage = "Approving...";
+        APIService.approveProblem(data, response=> {
+            if(response.responseCode == 200) {
+                obj.unverifiedProblems.splice(index, 1);
+                obj.setState({statusMessage: "Approved"});
+            }
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
+        });
+    }
+
+    deleteSolution(index) {
+        var obj = this;
+        var data = {uid: obj.user.uid, authtoken: obj.user.token, solution: obj.unverifiedSolutions[index]};
+        obj.statusMessage = "Deleting...";
+        APIService.deleteSolution(data, response=> {
+            if(response.responseCode == 200) {
+                obj.unverifiedSolutions.splice(index, 1);
+                obj.setState({statusMessage: "Deleted"});
+            }
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
+        });
+    }
+
+    approveSolution(index) {
+        var obj = this;
+        var data = {uid: obj.user.uid, authtoken: obj.user.token, solution: obj.unverifiedSolutions[index]};
+        obj.statusMessage = "Approving...";
+        APIService.approveSolution(data, response=> {
+            if(response.responseCode == 200) {
+                obj.unverifiedSolutions.splice(index, 1);
+                obj.setState({statusMessage: "Approved"});
+            }
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
+        });
+    }
+
+    deleteMapping(index) {
+        var obj = this;
+        obj.setState({statusMessage: "Deleting..."})
+        var data = {
+            uid: obj.user.uid,
+            authtoken: obj.user.token,
+            problem: obj.unverifiedMappings[index].problem,
+            solution: obj.unverifiedMappings[index].solution,
+            doseId: obj.unverifiedMappings[index].doseId
+        }
+        APIService.deleteMapping(data, response => {
+            if(response.responseCode == 200) {
+                obj.unverifiedMappings.splice(index, 1);
+                obj.setState({statusMessage: "Deleted"})
+            }
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
+        });
+    }
+
+
+    approveMapping(index) {
+        var obj = this;
+        obj.setState({statusMessage: "Approving..."})
+        var data = {
+            uid: obj.user.uid,
+            authtoken: obj.user.token,
+            problem: obj.unverifiedMappings[index].problem,
+            solution: obj.unverifiedMappings[index].solution,
+            doseId: obj.unverifiedMappings[index].doseId
+        }
+        APIService.approveMapping(data, response => {
+            if(response.responseCode == 200) {
+                obj.unverifiedMappings.splice(index, 1);
+                obj.setState({statusMessage: "Approved"})
+            }
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
         });
     }
 

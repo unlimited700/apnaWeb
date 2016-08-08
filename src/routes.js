@@ -18,6 +18,10 @@ import DashboardAddProblem from './components/dashboard/AddProblem.react';
 import DashboardAddSolution from './components/dashboard/AddSolution.react';
 import DashboardMapProblemSolution from './components/dashboard/MapProblemSolution.react';
 
+import PreAdmin from './components/dashboard/admin/PreAdmin.react.js';
+import UnverifiedProblems from './components/dashboard/admin/UnverifiedProblems.react';
+import UnverifiedSolutions from './components/dashboard/admin/UnverifiedSolutions.react';
+import UnverifiedMappings from './components/dashboard/admin/UnverifiedMappings.react';
 
 module.exports =
     <Route path='/' component= {MasterPage}>
@@ -34,6 +38,11 @@ module.exports =
         <Route path="/verify" component={VerifyPage} />
         <Route path="/dash" component={DashboardPage}>
             <IndexRoute component={DashboardLandingComponent} />
+            <Route path="/dash/admin" component={PreAdmin}>
+                <Route path="/dash/admin/unverified-problems" component={UnverifiedProblems} />
+                <Route path="/dash/admin/unverified-solutions" component={UnverifiedSolutions} />
+                <Route path="/dash/admin/unverified-mappings" component={UnverifiedMappings} />
+            </Route>
             <Route path="/dash/add-problem" component={DashboardAddProblem} />
             <Route path="/dash/add-solution" component={DashboardAddSolution} />
             <Route path="/dash/map-problem-solution" component={DashboardMapProblemSolution} />

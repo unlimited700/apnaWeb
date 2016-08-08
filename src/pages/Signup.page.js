@@ -10,14 +10,19 @@ var SignupPage = React.createClass({
                     <p>{this.props.User.signupError}</p>
                     <input type="text" placeholder="Name"/>
                     <input type="text" placeholder="example@example.com"/><br />
-                    <input type="number" placeholder="Phone"/>
                     <div className="left">
                         <input type="password" placeholder="Password"/><br />
                     </div>
                     <div className="right">
                         <input type="password" placeholder="Confirm Password"/>
                     </div>
-                    <input type="number" placeholder="Age"/>
+                    <div className = "left">
+                        <input type="number" placeholder="Age"/>
+                    </div>
+                    <div className="right">
+                        <input type="number" placeholder="Phone"/>
+                    </div>
+                    <input type="text" placeholder="Promo link (if any)" /> <br />
                     <div className="inline" >
                         <input type="radio" name="gender" value="Male" /> Male
                         <input type="radio" name="gender" value="Female"/> Female
@@ -32,16 +37,19 @@ var SignupPage = React.createClass({
     _signup(event) {
         event.preventDefault();
         var input = event.target.children;
+        console.log(input);
         var data = {
             name: input[1].value,
             email: input[2].value,
-            phone: input[4].value,
-            password: input[5].children[0].value,
-            confirmPassword: input[6].children[0].value,
-            age: input[7].value,
-            male: input[8].children[0].checked,
-            female: input[8].children[1].checked,
+            phone: input[7].children[0].value,
+            password: input[4].children[0].value,
+            confirmPassword: input[5].children[0].value,
+            age: input[6].children[0].value,
+            promoLink: input[8].value,
+            male: input[10].children[0].checked,
+            female: input[10].children[1].checked,
         }
+        console.log(data);
         UserActions.signup(data);
     }
 });

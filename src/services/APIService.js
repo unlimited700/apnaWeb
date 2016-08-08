@@ -9,6 +9,15 @@ var apiHome = '/api/v1';
 
 var endpoints = {
     getProblems: apiHome + '/problems',
+    getActiveProblems: apiHome + '/admin/inactive-problems',
+    getInactiveSolutions: apiHome + '/admin/inactive-solutions',
+    getInactiveMapping: apiHome + '/admin/inactive-recommend',
+    deleteProblems: apiHome + '/admin/delete-problems',
+    approveProblems: apiHome + '/admin/approve-problems',
+    deleteSolutions: apiHome + '/admin/delete-solutions',
+    approveSolutions: apiHome + '/admin/approve-solutions',
+    deleteMappings: apiHome + '/admin/delete-problem-solution',
+    approveMappings: apiHome + '/admin/approve-problem-solution',
     getSolutions: apiHome + '/solutions',
     login: apiHome + '/login',
     signup: apiHome + '/signup',
@@ -40,7 +49,18 @@ var APIService = {
             method: 'GET',
             headers: publicHeaders
         }).then(FilterResponse).then(cb);
+    },
 
+    getInactiveProblems: function(data, cb) {
+        NProgress.start();
+        fetch(endpoints.getActiveProblems, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            }
+        }).then(FilterResponse).then(cb);
     },
 
     getRecommendations: function(data, cb, err) {
@@ -57,6 +77,30 @@ var APIService = {
     getSolutions: function(data, cb) {
         NProgress.start();
         fetch(endpoints.getSolutions, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            }
+        }).then(FilterResponse).then(cb);
+    },
+
+    getInactiveSolutions: function(data, cb) {
+        NProgress.start();
+        fetch(endpoints.getInactiveSolutions, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            }
+        }).then(FilterResponse).then(cb);
+    },
+
+    getInactiveMappings: function(data, cb) {
+        NProgress.start();
+        fetch(endpoints.getInactiveMapping, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -89,7 +133,7 @@ var APIService = {
                 authtoken: data.authtoken
             },
             body: JSON.stringify({
-                problemSolutionDose: [data.solution]
+                problemSolutionDose: data.solution
             })
         }).then(FilterResponse).then(cb);
     },
@@ -142,9 +186,108 @@ var APIService = {
             headers: publicHeaders,
             body: JSON.stringify(data),
         }).then(FilterResponse).then(cb);
+    },
+
+    deleteProblem: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.deleteProblems, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                problems: [data.problem]
+            })
+        }).then(FilterResponse).then(cb);
+    },
+
+    approveProblem: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.approveProblems, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken,
+            },
+            body: JSON.stringify({
+                problems: [data.problem]
+            }),
+        }).then(FilterResponse).then(cb);
+    },
+
+    deleteSolution: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.deleteSolutions, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                solutions: [data.solution]
+            })
+        }).then(FilterResponse).then(cb);
+    },
+
+    approveSolution: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.approveSolutions, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken,
+            },
+            body: JSON.stringify({
+                solutions: [data.solution]
+            }),
+        }).then(FilterResponse).then(cb);
+    },
+
+    approveMapping: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.approveMappings, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                problemSolutionDose: [{
+                    problem: data.problem,
+                    solution: data.solution,
+                    rating: "1",
+                    doseId: "" +data.doseId
+                }]
+            })
+        }).then(FilterResponse).then(cb);
+    },
+
+    deleteMapping: function (data, cb) {
+        NProgress.start();
+        fetch(endpoints.deleteMappings, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                uid: data.uid,
+                authtoken: data.authtoken
+            },
+            body: JSON.stringify({
+                problemSolutionDose: [{
+                    problem: data.problem,
+                    solution: data.solution,
+                    rating: "1",
+                    doseId: "" +data.doseId
+                }]
+            })
+        }).then(FilterResponse).then(cb);
     }
+
 };
 
 module.exports = APIService;
-
-
