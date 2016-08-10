@@ -27,6 +27,7 @@ var Header = React.createClass({
                         <li>
                             {this.props.User.isLoggedIn ? (<Link to="/dash" activeClassName="active">Dashboard</Link>) : (<Link to="/about" activeClassName="active">About Us</Link>)}
                         </li>
+                        <li><Link to="/feedback" activeClassName="active">Feedback</Link></li>
                         <li><a href="https://play.google.com/store/apps/details?id=com.apnavaidya" target="_blank" className="app-download-button"></a></li>
                     </ul>
                 </div>

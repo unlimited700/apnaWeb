@@ -24,6 +24,7 @@ var endpoints = {
     setSolution: apiHome + '/solution',
     mapProblemSolution: apiHome + '/upload-problem-solution',
     setProblem: apiHome + '/problem',
+    sendFeedback: apiHome + '/feedback',
     recommend: apiHome + '/recommend',
     verify: apiHome + '/verify'
 }
@@ -285,6 +286,15 @@ var APIService = {
                     doseId: "" +data.doseId
                 }]
             })
+        }).then(FilterResponse).then(cb);
+    },
+
+    sendFeedback: function(data, cb) {
+        NProgress.start();
+        fetch(endpoints.sendFeedback, {
+            method: 'POST',
+            headers: publicHeaders,
+            body: JSON.stringify(data)
         }).then(FilterResponse).then(cb);
     }
 

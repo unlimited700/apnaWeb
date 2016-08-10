@@ -11,6 +11,12 @@ a {
     color: black;
     display: block;
 }
+.rc-anchor-normal {
+    width: 252px !important;
+}
+textarea {
+    resize: none;
+}
 .clear {
     clear: both;
 }
@@ -86,7 +92,7 @@ main.loaded {
 .navbar-nav .welcome-li {
     position: absolute;
     right: 20px;
-    margin-top: 15px;
+    margin-top: 18px;
     cursor: auto;
     color: aliceblue;
 }
@@ -303,8 +309,8 @@ main.loaded {
     transition: all 0.20s;
     margin: 4px;
 }
-.form-container input[type="text"]:focus, .form-container input[type="text"]:hover, .form-container input[type="password"]:focus, .form-container input[type="password"]:hover, .form-container input[type="number"]:focus, .form-container input[type="number"]:hover , .form-container input[type="textarea"]:focus, .form-container input[type="textarea"]:hover  {
-    border: 2px solid rgba(255, 255, 255, .8);
+.form-container input[type="text"]:focus, .form-container input[type="text"]:hover, .form-container input[type="email"]:focus, .form-container textarea:focus, .form-container textarea:hover, .form-container input[type="email"]:hover, .form-container input[type="password"]:focus, .form-container input[type="password"]:hover, .form-container input[type="number"]:focus, .form-container input[type="number"]:hover , .form-container input[type="textarea"]:focus, .form-container input[type="textarea"]:hover  {
+    border: 2px solid rgba(138, 144, 142, 0.52)
 }
 .form-container input[type="radio"] {
 
@@ -503,9 +509,7 @@ button:hover {
     padding: 40px;
     margin: 0 auto;
     box-shadow: 0px 0px 1px grey;
-
 }
-
 
 @media only screen and (max-width: 540px) {
     .mapping-left {

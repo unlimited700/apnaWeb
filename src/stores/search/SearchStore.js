@@ -21,7 +21,7 @@ class SearchStore {
                 searchTerm: "",
                 searchResults: []
             },
-            selectedSolution: [],
+            selectedSolutions: [],
             selectedProblem: [],
             allProblems: [],
             allSolutions: [],
@@ -188,7 +188,6 @@ class SearchStore {
             return;
         }
         var pattern = new RegExp("^"+text, 'g');
-
         for( var solution in this.mapping.allSolutions) {
             if(this.mapping.allSolutions[solution].toLowerCase().match(pattern)) {
                 this.mapping.solution.searchResults.push(this.mapping.allSolutions[solution])
@@ -213,7 +212,7 @@ class SearchStore {
     handleMappingSolutionAdd(text) {
         var added = this.mapping.allSolutions.splice(this.mapping.allSolutions.indexOf(text), 1)[0];
         if(added) {
-            this.mapping.selectedSolution.push(added);
+            this.mapping.selectedSolutions.push(added);
         }
         this.mapping.solution.searchTerm = "";
         this.mapping.solution.searchResults = [];
@@ -238,7 +237,7 @@ class SearchStore {
             obj.setState({mappingStatus: "Please select frequency, duration and days."});
             return;
         }
-        if(obj.mapping.selectedProblem.length && obj.mapping.selectedSolution.length) {
+        if(obj.mapping.selectedProblem.length && obj.mapping.selectedSolutions.length) {
 
             obj.setState({mappingStatus: "Mapping ..."});
             var doseIndex = obj.mapping.calculateIndex(data.duration, data.days, data.frequency);
@@ -248,7 +247,7 @@ class SearchStore {
             }
             var postData = [];
             this.mapping.selectedProblem.map(problem => {
-                this.mapping.selectedSolution.map(solution => {
+                this.mapping.selectedSolutions.map(solution => {
                     postData.push({
                         problem: problem,
                         solution: solution,
@@ -259,7 +258,6 @@ class SearchStore {
                 })
             })
 
-            console.log(postData);
 
             var data = {
                 solution: postData,
@@ -275,11 +273,11 @@ class SearchStore {
                 else {
                     message = "Something went wrong, please try again.";
                 }
-                for(var i in obj.mapping.selectedSolution)
-                    obj.mapping.allSolutions.push(obj.mapping.selectedSolution[i]);
+                for(var i in obj.mapping.selectedSolutions)
+                    obj.mapping.allSolutions.push(obj.mapping.selectedSolutions[i]);
                 obj.mapping.allProblems.push(obj.mapping.selectedProblem[0]);
                 obj.mapping.selectedProblem = [];
-                obj.mapping.selectedSolution = [];
+                obj.mapping.selectedSolutions = [];
                 obj.setState({mappingStatus: message});
 
                 setTimeout(function() {

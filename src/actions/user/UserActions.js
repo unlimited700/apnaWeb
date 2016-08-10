@@ -13,7 +13,7 @@ class UserActions {
     login(user, pass) {
         return {user: user, pass: pass};
     }
-    
+
     signup(data) {
         return data;
     }
@@ -21,7 +21,7 @@ class UserActions {
     logout() {
         return 1;
     }
-    
+
     verify(data) {
         return data;
     }
@@ -58,7 +58,11 @@ class UserActions {
     approveMapping(index) {
         return index;
     }
-    
+
+    sendFeedback(data) {
+        return data;
+    }
+
 }
 
 module.exports = alt.createActions(UserActions);
