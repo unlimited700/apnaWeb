@@ -32,7 +32,7 @@ main.loaded {
 }
 .header-logo {
     height: 40px;
-    margin: -25px calc(-100%/7);
+    margin-top: -10px;
     position: absolute;
     border-radius: 50%;
 }
@@ -41,9 +41,9 @@ main.loaded {
     background-image: url('../img/android.png');
     background-position: center;
     background-size: cover;
-    margin-bottom: -14px;
+    margin-bottom: -16px;
     border-radius: 2px !important;
-    width: 98px;
+    width: 110px;
     padding: 19px !important;
 }
 
@@ -66,22 +66,22 @@ main.loaded {
     margin-right: 2px;
 }
 .navbar-nav li:hover {
-    background-color: #f5f5f5;
+    background-color: #f5f5f5 !important;
 }
 .navbar-nav .active {
-    background-color: #f5f5f5;
-    color: rgba(0, 0, 0, 0.45);
+    background-color: #f5f5f5 !important;
+    color: rgba(0, 0, 0, 0.45) !important;
     border-radius: 50px 50px 50px 0px;
 }
 
 .navbar-nav li a {
     display: block;
-    color: #f5f5f5;
+    color: #f5f5f5 !important;
     padding: 15px 15px;
     border-radius: 50px 50px 50px 0px;
 }
 .navbar-nav li a:hover {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.45)  !important;
 }
 .navbar-nav .welcome-li {
     position: absolute;
@@ -91,8 +91,7 @@ main.loaded {
     color: aliceblue;
 }
 .navbar-nav .welcome-li:hover {
-
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 .search-container {
@@ -488,6 +487,25 @@ button:hover {
     float: right;
     width: 50%;
 }
+.justify {
+    text-align: justify;
+}
+.dark-grey {
+    color: darkslategrey;
+}
+
+/**
+    ABOUT US PAGE
+**/
+.about-container {
+    background-color: white;
+    width: 50%;
+    padding: 40px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 1px grey;
+
+}
+
 
 @media only screen and (max-width: 540px) {
     .mapping-left {
@@ -501,8 +519,35 @@ button:hover {
     }
 }
 
-@media only screen and (max-width: 630px) {
+@media only screen and (max-width: 768px) {
     .welcome-li {
         display: none !important;
+    }
+    .navbar-nav li {
+        display: block;
+    }
+    .about-container {
+        width: 75%;
+        padding: 20px;
+    }
+
+    .app-download-button {
+        margin: 5px auto;
+    }
+
+    .navbar-nav li, .navbar-nav li:hover, .navbar-nav li a, .navbar-nav li a:hover, .navbar-nav  .active{
+        border-radius: 0 0 0 0;
+    }
+
+}
+@media (min-width: 768px) {
+    .navbar {
+        border-radius: 0px;
+    }
+    .navbar-nav {
+        float: none;
+    }
+    .navbar-nav>li {
+        float: none;
     }
 }

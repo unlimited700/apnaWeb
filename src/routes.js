@@ -5,6 +5,7 @@ import DashboardPage from './pages/Dashboard.react';
 import MasterPage from './pages/MasterPage.react';
 import SearchApp from './components/search/SearchApp.react';
 import LoginPage from './pages/Login.page';
+import AboutUsPage from './pages/AboutUs.react';
 import SignupPage from './pages/Signup.page';
 import LogoutPage from './pages/Logout.page';
 import VerifyPage from './pages/Verify.react';
@@ -35,6 +36,7 @@ module.exports =
         <Route path="/login" component={LoginPage} />
         <Route path="/logout" component={LogoutPage} />
         <Route path="/signup" component={SignupPage} />
+        <Route path="/about" component={AboutUsPage} />
         <Route path="/verify" component={VerifyPage} />
         <Route path="/dash" component={DashboardPage}>
             <IndexRoute component={DashboardLandingComponent} />
