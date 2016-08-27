@@ -56,6 +56,8 @@ class UserStore {
             approveSolution: UserActions.approveSolution,
             deleteMapping: UserActions.deleteMapping,
             approveMapping: UserActions.approveMapping,
+
+            sendFeedback: UserActions.sendFeedback,
         })
     }
 
@@ -290,7 +292,7 @@ class UserStore {
             }, 2000);
         });
     }
-    
+
     approveProblem(index) {
         var obj = this;
         var data = {uid: obj.user.uid, authtoken: obj.user.token, problem: obj.unverifiedProblems[index]};
@@ -377,6 +379,22 @@ class UserStore {
                 obj.setState({statusMessage: ""});
             }, 2000);
         });
+    }
+
+    sendFeedback(data) {
+        var obj = this;
+        obj.setState({statusMessage: "Sending feedback, hold on"})
+
+        APIService.sendFeedback(data, response => {
+            if(response.responseCode == 200) {
+                obj.setState({statusMessage: "Thanks for the feedback"});
+            }
+
+            setTimeout(function() {
+                obj.setState({statusMessage: ""});
+            }, 2000);
+        });
+
     }
 
 
